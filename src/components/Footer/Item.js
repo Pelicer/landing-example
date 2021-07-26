@@ -21,7 +21,7 @@ function Item(props) {
 
     return (
         <ItemWrapper>
-            <Image src={props.icon.default} />
+            <Image src={props.icon} />
         </ItemWrapper>
     );
 }

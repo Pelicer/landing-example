@@ -1,23 +1,24 @@
 import styled from 'styled-components'
 import Item from './Item';
 import { v4 as uuidv4 } from 'uuid';
+import { facebook, instagram, linkedin, twitter } from '../Social/SocialIcons';
 
 const SocialMedias = [
     {
         "link": "#",
-        "icon": "../../assets/icons/social-media/facebook.svg"
+        "icon": facebook
     },
     {
         "link": "#",
-        "icon": "../../assets/icons/social-media/twitter.svg"
+        "icon": twitter
     },
     {
         "link": "#",
-        "icon": "../../assets/icons/social-media/instagram.svg"
+        "icon": instagram
     },
     {
         "link": "#",
-        "icon": "../../assets/icons/social-media/linkedin.svg"
+        "icon": linkedin
     },
 ];
 
@@ -30,19 +31,15 @@ const Social = styled.div`
 function SocialMedia() {
     return (
         <Social>
-            <Item link="#" icon={require("../../assets/icons/social-media/facebook.svg")} />
-            <Item link="#" icon={require("../../assets/icons/social-media/instagram.svg")} />
-            <Item link="#" icon={require("../../assets/icons/social-media/linkedin.svg")} />
-            <Item link="#" icon={require("../../assets/icons/social-media/twitter.svg")} />
-            {/* {
+            {
                 SocialMedias.map((media) => {
                     return <Item
                         key={uuidv4()}
                         name={media.name}
-                        icon={require(media.icon)}
+                        icon={media.icon.default}
                     />
                 })
-            } */}
+            }
         </Social>
     );
 }

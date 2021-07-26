@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Dialog from '../../parts/Dialog';
 import Title from './Title';
@@ -6,23 +6,18 @@ import InputField from './InputField';
 import TextAreaField from './TextAreaField';
 import Button from '../Header/Button';
 
-const Form = styled.div`
+const StyledForm = styled.div`
     display: grid;
     grid-gap: 30px;
 `;
 
-export default class ContactForm extends React.Component {
-    constructor(props) {
-        super(props);
-        this.validateMessage = this.validateMessage.bind(this);
-        this.validateMail = this.validateMail.bind(this);
-        this.validatePhone = this.validatePhone.bind(this);
-        this.sendMail = this.sendMail.bind(this);
-        this.setDialogData = this.setDialogData.bind(this);
-        this.state = {
-            maxMessageChar: 500,
+const maxMessageLength = 500;
+const mailRegex = /^(([^<>()[\]\\.,;:\s@]+(\.[^<>()[\]\\.,;:\s@]+)*)|(.+))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+;
+function Form(props) {
+    const [formState, setFormState] = useState(
+        {
             remainingMessageChar: 500,
-            mailRegex: /^(([^<>()[\]\\.,;:\s@]+(\.[^<>()[\]\\.,;:\s@]+)*)|(.+))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
             dialogData: {
                 set: false,
                 mode: "",
@@ -34,15 +29,55 @@ export default class ContactForm extends React.Component {
                     action: null
                 }
             }
+        });
+
+    const validateForm = () => {
+        let formDataIsValid = true;
+        let fields = [
+            document.getElementsByName("txtNome")[0],
+            document.getElementsByName("txtEmail")[0],
+            document.getElementsByName("txtAssunto")[0],
+            document.getElementsByName("txtTelefone")[0],
+            document.getElementsByName("txtMensagem")[0]
+        ];
+        fields.forEach((element) => {
+            if (element.value.length <= 0) {
+                element.classList.add("error");
+                formDataIsValid = false;
+            } else {
+                element.classList.remove("error");
+            }
+        })
+        if (!(validateMail(fields[1]) && validatePhone((fields[3])))) {
+            formDataIsValid = false;
+        }
+
+        if (formDataIsValid) {
+            let mailpostData = {
+                lang: "pt-BR",
+                sender: {
+                    name: fields[0].value,
+                    mail: fields[1].value
+                },
+                mail: {
+                    subject: fields[2].value,
+                    body: fields[4].value
+                },
+                additionalInfo: {
+                    phoneNumber: fields[3].value
+                }
+            }
+            sendMail(mailpostData);
         };
+
     }
 
-    setDialogData(newData) {
-        this.setState({ dialogData: newData }, () => console.log(this.state.dialogData));
+    const setDialogData = (newData) => {
+        setFormState({ dialogData: newData }, () => console.log(formState.dialogData));
     }
 
-    sendMail(mailpostData) {
-        this.setDialogData(
+    const sendMail = (mailpostData) => {
+        setDialogData(
             {
                 set: true,
                 mode: "loading",
@@ -82,7 +117,7 @@ export default class ContactForm extends React.Component {
                     });
             })
             .catch((error) => {
-                this.setState(
+                setFormState(
                     {
                         set: true,
                         mode: "error",
@@ -100,101 +135,44 @@ export default class ContactForm extends React.Component {
             });
     }
 
-    validatePhone(e) {
+    const validatePhone = (e) => {
         return true;
     }
 
-    validateMail(e) {
-        let mail = null;
-        if (e.target === undefined) {
-            e.target = e;
-            mail = e.value
-        } else {
-            mail = e.target.value;
-        }
-        if (!this.state.mailRegex.test(mail)) {
+    const validateMail = (e) => {
+        let mail = e.target.value;
+        if (!mailRegex.test(mail)) {
             e.target.classList.add("error");
-            return false;
-        } else {
-            e.target.classList.remove("error");
-            return true;
+            return;
         }
+        e.target.classList.remove("error");
     }
 
-    validateMessage(e) {
-        let msg = null;
-        if (e.target === undefined) {
-            e.target = e;
-            msg = e.value
-        } else {
-            msg = e.target.value;
+    const validateMessage = (e) => {
+        let msg = e.target.value;
+        if (msg.length > maxMessageLength) {
+            e.target.value = msg.substring(0, maxMessageLength);
+            return;
         }
-        if (msg.length > this.state.maxMessageChar) {
-            e.target.value = msg.substring(0, this.state.maxMessageChar);
-            return false;
-        } else {
-            this.setState({ remainingMessageChar: this.state.maxMessageChar - msg.length })
-            return true;
-        }
+        setFormState({ remainingMessageChar: maxMessageLength - msg.length })
     }
 
-    validateForm() {
-        let formDataIsValid = true;
-        let fields = [
-            document.getElementsByName("txtNome")[0],
-            document.getElementsByName("txtEmail")[0],
-            document.getElementsByName("txtAssunto")[0],
-            document.getElementsByName("txtTelefone")[0],
-            document.getElementsByName("txtMensagem")[0]
-        ];
-        fields.forEach((element) => {
-            if (element.value.length <= 0) {
-                element.classList.add("error");
-                formDataIsValid = false;
-            } else {
-                element.classList.remove("error");
-            }
-        })
-        if (!(this.validateMail(fields[1]) && this.validatePhone((fields[3])))) {
-            formDataIsValid = false;
-        }
-
-        if (formDataIsValid) {
-            let mailpostData = {
-                lang: "pt-BR",
-                sender: {
-                    name: fields[0].value,
-                    mail: fields[1].value
-                },
-                mail: {
-                    subject: fields[2].value,
-                    body: fields[4].value
-                },
-                additionalInfo: {
-                    phoneNumber: fields[3].value
-                }
-            }
-            this.sendMail(mailpostData);
-        };
-
-    }
-
-    render() {
-        return (
-            <div id="sunshine-contact">
-                <div className="form-wrapper">
-                    <Title />
-                    <Form>
-                        <InputField name="Nome" />
-                        <InputField name="Email" onKeyUp={(event) => this.validateMail(event)} />
-                        <InputField name="Assunto" />
-                        <InputField name="Telefone" onKeyUp={(event) => this.validatePhone(event)} />
-                        <TextAreaField name="Mensagem" onKeyUp={(event) => this.validateMessage(event)} />
-                        <p id="txtRemainingChars">{this.state.remainingMessageChar} caracteres</p>
-                        <Button content="Enviar" maxWidth="none" onClick={() => this.validateForm()} />
-                    </Form>
-                </div>
+    return (
+        <div id="sunshine-contact">
+            <div className="form-wrapper">
+                <Title />
+                <StyledForm>
+                    <InputField name="Nome" />
+                    <InputField name="Email" onKeyUp={(event) => validateMail(event)} />
+                    <InputField name="Assunto" />
+                    <InputField name="Telefone" onKeyUp={(event) => validatePhone(event)} />
+                    <TextAreaField name="Mensagem" onKeyUp={(event) => validateMessage(event)} />
+                    <p id="txtRemainingChars">{formState.remainingMessageChar} caracteres</p>
+                    <Button content="Enviar" maxWidth="none" onClick={() => validateForm()} />
+                </StyledForm>
             </div>
-        );
-    }
+        </div>
+    );
 }
+
+export default Form;

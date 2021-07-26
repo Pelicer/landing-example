@@ -2,23 +2,24 @@ import styled from 'styled-components'
 import palette from '../assets/style/palette.module.scss';
 import SocialApp from '../components/Social/SocialApp'
 import { v4 as uuidv4 } from 'uuid';
+import { facebook, instagram, linkedin, twitter } from '../components/Social/SocialIcons';
 
 const SocialMedias = [
     {
         "link": "#",
-        "icon": "../assets/icons/social-media/facebook.svg"
+        "icon": facebook
     },
     {
         "link": "#",
-        "icon": "../assets/icons/social-media/twitter.svg"
+        "icon": twitter
     },
     {
         "link": "#",
-        "icon": "../assets/icons/social-media/instagram.svg"
+        "icon": instagram
     },
     {
         "link": "#",
-        "icon": "../assets/icons/social-media/linkedin.svg"
+        "icon": linkedin
     },
 ];
 
@@ -32,19 +33,15 @@ const SocialBar = styled.section`
 function Social() {
     return (
         <SocialBar>
-            <SocialApp link="#" social={require("../assets/icons/social-media/facebook.svg")} />
-            <SocialApp link="#" social={require("../assets/icons/social-media/instagram.svg")} />
-            <SocialApp link="#" social={require("../assets/icons/social-media/linkedin.svg")} />
-            <SocialApp link="#" social={require("../assets/icons/social-media/twitter.svg")} />
-            {/* {
-                SocialMedias.map((media) =>{
-                    return <SocialApp 
+            {
+                SocialMedias.map((media) => {
+                    return <SocialApp
                         key={uuidv4()}
                         link={media.link}
-                        social={require(media.icon)}
+                        social={media.icon.default}
                     />
                 })
-            } */}
+            }
         </SocialBar>
     );
 }

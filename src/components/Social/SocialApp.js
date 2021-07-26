@@ -22,7 +22,7 @@ const CustomSizedImage = styled.img`
 function SocialApp(props) {
     return (
         <Social href={props.link} target="_blank">
-            <CustomSizedImage src={props.social.default} />
+            <CustomSizedImage src={props.social} />
         </Social>
     );
 }
