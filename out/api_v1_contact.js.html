@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: api/v1/contact.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: api/v1/contact.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * API Contact
+ * @module     api/v1/contact
+ * @file       API to provice back-end support to Contact component
+ * @version    1.0.0
+ * @author     takaki-tk (takaki(at)tk.tec.br)
+ * @copyright  TK Technology (c) 2021
+ * @requires   module:lib/global
+ * @requires   module:lib/contact_msg
+ * @requires   module:nodemailer
+ */
+
+/**
+ * @constant
+ * @module lib/global
+ * @see global
+ */
+const GLOBAL = require( "../../lib/global" );
+
+/**
+ * @constant
+ * @module lib/contact_msg
+ * @see contact_msg
+ */
+const MSG = require( "../../lib/contact_msg" );
+
+/**
+ * @constant
+ * @module nodemailer
+ * @see {@link https://nodemailer.com/about/}
+ */
+const nodemailer = require("nodemailer");
+
+/**
+ * Exposed call for Contact API
+ * @author   takaki-tk (takaki(at)tk.tec.br)
+ * @version  1.0.0
+ * @module   api/v1/contact
+ * @param    {*}  req  Request object
+ * @param    {*}  res  Response object
+ */
+module.exports = async (req, res) =>
+{
+  try
+  {
+    if( req.method === "POST" )
+    {
+      const { lang, sender, mail, additionalInfo } = req.body;
+      let missingField = [];
+      
+      if( lang == null ) lang = "pt-BR"; // If UI does not set the language, so we will assume Portuguese as default
+
+      if( sender.name == null ) missingField.push( MSG.contact_msg.sendername[ lang ] );
+      if( sender.mail == null ) missingField.push( MSG.contact_msg.sendermail[ lang ] );
+      if( mail.subject == null ) missingField.push( MSG.contact_msg.mailsubject[ lang ] ); 
+      if( mail.body == null ) missingField.push( MSG.contact_msg.mailbody[ lang ] );
+      
+      if( missingField.length > 0 )
+      {
+        res.statusCode = 200;
+        res.json( { bool: false, value: `${MSG.contact_msg.invalidContract[ lang ]}: ${missingField.join( ", " )}`});
+      }
+
+      const transporter = nodemailer.createTransport({
+        host: process.env.MAIL_HOST,
+        port: process.env.MAIL_HOST_PORT,
+        secure: process.env.MAIL_HOST_SECURE,
+        auth: {
+          user: process.env.MAIL_USR,
+          pass: process.env.MAIL_PWD
+        }
+      });
+
+      let addInfo = "";
+      if( Object.keys( additionalInfo ) > 0 )
+        Object.keys( additionalInfo ).forEach( k => addInfo = `${k}: ${additionalInfo[ k ]}&lt;br />`);
+
+      const mailOption = {
+        from: `Website &lt;${process.env.MAIL_DESTINATION}> ${MSG.contact_msg.mailtext.onbehalf[ lang ]} ${senderName} &lt;${senderMail}>`,
+        to: process.env.MAIL_DESTINATION,
+        subject: `${mailSubject}`,
+        html: `
+          ${MSG.contact_msg.mailtext.from[ lang ]}: ${senderName} &amp;lt;${senderMail}&amp;gt;&lt;br />
+          ${MSG.contact_msg.mailtext.date[ lang ]}: ${(new Date()).toISOString()}&lt;br />
+          ${addInfo}
+          ${MSG.contact_msg.mailtext.message[ lang ]}: ${mailBody}
+          `
+      };
+
+      GLOBAL.debug(mailOption, "dir");
+
+      await transporter.sendMail(mailOption)
+      .then( data => {
+        GLOBAL.debug(data, "dir");
+        res.json({ bool: true, value: MSG.contact_msg.success[ lang ] });
+      })
+      .catch( err => {
+        GLOBAL.debug(err, "error");
+        res.json({ bool: false, value: MSG.contact_msg.failed[ lang ] });
+      });
+    }
+    else if( req.method === "GET" &amp;&amp; "contract" in req.query )
+    {
+      res.statusCode = 200;
+      res.json( { bool: true, value: { lang: "pt-BR|en-US", sender: { description: "Only Name and Mail are required, String format. Any additional info, use additionalInfo key.", name: "[String]", mail: "[String]" }, mail: { description: "Only Subject and Body are required, String format. Body can use HTML tags to enrich the text. Any additional info, use additionalInfo key.", subject: "[String]", body: "[String]" }, additionalInfo: { description: "additionalInfo is optional, all keys inside within it will be used as is (key1: value, key2: value, etc), use then accordingly.", anyInfo: "[String]", anotherInfo: "[String]" } } } );
+    }
+    else 
+    {
+      res.statusCode = 404;
+      res.json( { bool: false, value: MSG.contact_msg.fourzerofour[ "pt-BR" ] } );
+    }
+  }
+  catch(err)
+  {
+    GLOBAL.debug(`Exception raised @ id.js\n${err}`, "error" );
+    res.json({ bool: false, value: MSG.contact_msg.exception[ "pt-BR" ] });
+  }
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-api_v1_contact.html">api/v1/contact</a></li><li><a href="module-contact_msg.html">contact_msg</a></li><li><a href="module-lib_contact_msg.html">lib/contact_msg</a></li><li><a href="module-lib_global.html">lib/global</a></li><li><a href="module-nodemailer.html">nodemailer</a></li></ul><h3>Global</h3><ul><li><a href="global.html#debug">debug</a></li><li><a href="global.html#fromGUID">fromGUID</a></li><li><a href="global.html#toGUID">toGUID</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.6</a> on Tue Apr 20 2021 20:58:38 GMT-0300 (Brasilia Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
