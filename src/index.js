@@ -7,5 +7,5 @@ ReactDOM.render(
   <React.StrictMode>
     <Landing />
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById('app-root')
 );

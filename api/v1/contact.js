@@ -45,7 +45,7 @@ module.exports = async (req, res) => {
     if (req.method === "POST") {
       req.body = JSON.parse(req.body);
       var { lang, sender, mail } = req.body;
-     
+
       console.log(lang)
       console.log(sender)
       console.log(mail)

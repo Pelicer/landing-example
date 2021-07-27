@@ -3,8 +3,10 @@ import styled from 'styled-components';
 import Title from './Title';
 import InputField from './InputField';
 import TextAreaField from './TextAreaField';
-import Button from '../Header/Button';
-import axios from 'axios';
+import Button from '../../parts/Button';
+import { email } from '../../api/EmailAPI';
+import Modal from '../Modal/Modal';
+import WorkspaceCat from '../../assets/illustrations/workspace-cat.svg'
 
 const StyledForm = styled.form`
     display: grid;
@@ -16,58 +18,79 @@ const notEmptyRegex = /^(?!\s*$).+/;
 
 function Form() {
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        console.log(event)
-        return false;
+    const [requiredFields, setRequiredFields] = useState({
+        "Nome": {
+            isValid: false,
+            content: ""
+        },
+        "Email": {
+            isValid: false,
+            content: ""
+        },
+        "Assunto": {
+            isValid: false,
+            content: ""
+        },
+        "Telefone": {
+            isValid: true,
+            content: ""
+        },
+        "Mensagem": {
+            isValid: false,
+            content: ""
+        }
+    });
 
-        // if (formDataIsValid) {
-        //     let mailpostData = {
-        //         lang: "pt-BR",
-        //         sender: {
-        //             name: fields[0].value,
-        //             mail: fields[1].value
-        //         },
-        //         mail: {
-        //             subject: fields[2].value,
-        //             body: fields[4].value
-        //         },
-        //         additionalInfo: {
-        //             phoneNumber: fields[3].value
-        //         }
-        //     }
-        //     sendMail(mailpostData);
-        // };
+    const validateField = (field, isValid, content) => {
+        setRequiredFields(prevRequiredFields => ({
+            ...prevRequiredFields, [field]: {
+                isValid: isValid,
+                content: content
+            }
+        }))
+        console.log(requiredFields);
     }
 
-    const sendMail = (mailpostData) => {
-        //modal carregando
-        axios({
-            method: "POST",
-            url: "./api/v1/contact",
-            body: JSON.stringify(mailpostData)
-        }).then(() => {
-            //modal sucesso
-
-        }).catch(error => {
-            //modal deu ruim
-            console.log(error);
-        })
+    const handleSubmit = (event) => {
+        console.log(event);
+        event.preventDefault();
+        for (let key in requiredFields) {
+            if (!requiredFields[key].isValid) {
+                console.warn("campos faltando")
+                //visually notify that there's an invalid field
+                return;
+            }
+        }
+        let mailpostData = {
+            lang: "pt-BR",
+            sender: {
+                name: requiredFields["Nome"].content,
+                mail: "willpelicer@gmail.com"
+            },
+            mail: {
+                subject: requiredFields["Assunto"].content,
+                body: requiredFields["Mensagem"].content
+            },
+            additionalInfo: {
+                phoneNumber: requiredFields["Telefone"].content
+            }
+        }
+        // email.sendMail(mailpostData);
+        return false;
     }
 
     return (
-        <div id="sunshine-contact">
-            <div className="form-wrapper">
-                <Title />
-                <StyledForm onSubmit={handleSubmit}>
-                    <InputField name="Nome" isValidCondition={notEmptyRegex} />
-                    <InputField name="Email" isValidCondition={mailRegex} />
-                    <InputField name="Assunto" isValidCondition={notEmptyRegex} />
-                    <InputField name="Telefone" isValidCondition={notEmptyRegex} />
-                    <TextAreaField name="Mensagem" isValidCondition={notEmptyRegex} maxLength={500} />
-                    <Button type="submit" content="Enviar" maxWidth="none" />
-                </StyledForm>
-            </div>
+        <div>
+            <Title />
+            <StyledForm onSubmit={handleSubmit}>
+                <InputField name="Nome" reportState={validateField} isValidCondition={notEmptyRegex} />
+                <InputField name="Email" reportState={validateField} isValidCondition={mailRegex} />
+                <InputField name="Assunto" reportState={validateField} isValidCondition={notEmptyRegex} />
+                <InputField name="Telefone" reportState={validateField} />
+                <TextAreaField name="Mensagem" reportState={validateField} isValidCondition={notEmptyRegex} maxLength={500} />
+                <Button type="submit" content="Enviar" maxWidth="none" />
+            </StyledForm>
+            {/* <Modal image="Loading" illustration={WorkspaceCat} title="Sending e-mail" description="Your e-mail will be sent shortly (if the cat allow)" /> */}
         </div>
     );
 }

@@ -5,7 +5,7 @@ import fonts from '../../assets/style/fonts.module.scss';
 const Credit = styled.span`
     padding-top: 10px;
     color: ${palette.support_white};
-    font-family: ${fonts.body1};
+    font: ${fonts.body1};
 `;
 
 function Credits() {

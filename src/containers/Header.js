@@ -1,13 +1,15 @@
 import styled from 'styled-components'
-import FeaturedImage from '../components/Header/FeaturedImage'
+import FeaturedImage from '../parts/FeaturedImage'
 import Title from '../components/Header/Title'
 import Content from '../components/Header/Content'
-import HeaderButton from '../components/Header/Button'
+import Button from '../parts/Button'
 import Recommendation from '../components/Header/Recommendation'
 import palette from '../assets/style/palette.module.scss';
+import measures from '../assets/style/measures.module.scss';
+import GirlTypying from '../assets/illustrations/girl-typing.svg'
 
 const HeaderSection = styled.section`
-    padding: 0 100px;
+    padding: 0 ${measures.main_content_margin};
     display: grid;
     height: 100vh;
     grid-template-columns: repeat(2, 1fr);
@@ -32,12 +34,12 @@ function Header() {
     return (
         <HeaderSection>
             <HeaderImage>
-                <FeaturedImage />
+                <FeaturedImage image={GirlTypying} size="500px" />
             </HeaderImage>
             <HeaderContent>
                 <Title />
                 <Content />
-                <HeaderButton content="Watch 2-Min Demo Video" maxWidth="250px" />
+                <Button content="Watch 2-Min Demo Video" maxWidth="250px" />
                 <Recommendation />
             </HeaderContent>
         </HeaderSection>

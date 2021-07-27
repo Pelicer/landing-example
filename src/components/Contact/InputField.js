@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import palette from '../../assets/style/palette.module.scss';
 import fonts from '../../assets/style/fonts.module.scss';
-import { v4 as uuidv4 } from 'uuid';
+import { stringValidator } from '../../utils/Validations'
 
 const Field = styled.div`
     display: flex;
@@ -19,7 +19,7 @@ const Input = styled.input`
     padding: 10px;
     border-radius: 5px;
     outline: none;
-    border: 1px solid ${palette.support_grey_30};
+    border: 1px solid ${props => props.borderColor};
     width: 100%;
     resize: none;
     box-sizing: border-box;
@@ -28,31 +28,28 @@ const Input = styled.input`
     }
 `;
 
-const ErrorInput = styled(Input)`
-    border: 1px solid ${palette.support_red};
-`;
-
 function InputField(props) {
 
-    const [isValid, setValid] = useState(false);
+    const [isValid, setValid] = useState(true);
     const [content, setContent] = useState("");
+    const borderColor = isValid ? palette.support_grey_30 : palette.support_red;
 
-    const validateField = (event) => {
-        let value = event.target.value;
-        setContent(value);
-        if (props.isValidCondition.test(value)) {
-            setValid(true);
-            return;
-        }
-        setValid(false);
+    const validate = (event) => {
+        setContent(event.target.value);
+        setValid(stringValidator.validateField(event.target.value, props.isValidCondition))
+        props.reportState(props.name, isValid, event.target.value);
     }
-
-    const StyledInput = isValid ? Input : ErrorInput;
 
     return (
         <Field>
-            <Label htmlFor={"txt" + props.name}>{props.name + ":"}</Label>
-            <StyledInput key={uuidv4()} color={props.color} name={"txt" + props.name} value={content} onChange={validateField}></StyledInput>
+            <Label htmlFor={props.name}>{props.name + ":"}</Label>
+            <Input
+                key={"form-input-field"}
+                borderColor={borderColor}
+                value={content}
+                name={props.name}
+                onChange={validate}>
+            </Input>
         </Field>
     );
 }

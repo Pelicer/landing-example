@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import palette from '../assets/style/palette.module.scss';
+import measures from '../assets/style/measures.module.scss';
 import Title from '../components/Portfolio/Title';
 import Item from '../components/Portfolio/Item';
 import { v4 as uuidv4 } from 'uuid';
@@ -38,18 +39,16 @@ const Articles = [
 ]
 
 const PortfolioSection = styled.section`
-    padding: 0 100px;
+    padding: 0 ${measures.main_content_margin};
     background-color: ${palette.support_white};
     justify-content: space-around;
 `;
 
 const ItemsWrapper = styled.div`
     margin: 50px 0;
-    padding: 0 150px;
     display: grid;
     grid-template-columns: repeat(3, auto);
-    grid-column-gap: 30px;
-    grid-row-gap: 30px;
+    grid-gap: 30px;
     justify-items: center;
 `;
 

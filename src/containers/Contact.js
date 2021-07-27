@@ -1,10 +1,12 @@
 import styled from 'styled-components'
-import FeaturedImage from '../components/Contact/FeaturedImage';
+import measures from '../assets/style/measures.module.scss'
+import FeaturedImage from '../parts/FeaturedImage';
 import Form from '../components/Contact/Form';
+import Mail from '../assets/illustrations/mail.svg';
 
 const Contact = styled.section`
     margin: 50px 0;
-    padding: 0 100px;
+    padding: 0 ${measures.main_content_margin};
     display: grid;
     grid-template-columns: repeat(2, 1fr);
 `;
@@ -19,7 +21,7 @@ function Social() {
     return (
         <Contact>
             <ImageWrapper>
-                <FeaturedImage />
+                <FeaturedImage image={Mail} size="400px" />
             </ImageWrapper>
             <Form />
         </Contact>

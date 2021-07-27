@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import palette from '../../assets/style/palette.module.scss';
 import fonts from '../../assets/style/fonts.module.scss';
+import { stringValidator } from '../../utils/Validations'
 
 const Field = styled.div`
     display: flex;
@@ -15,12 +16,17 @@ const Label = styled.label`
     font-size: .75rem;
 `;
 
+const CharactersCount = styled.p`
+    font: ${fonts.body1};
+    font-size: .75rem;
+`;
+
 const TextArea = styled.textarea`
     font: ${fonts.body1};
     padding: 10px;
     border-radius: 5px;
     outline: none;
-    border: 1px solid ${palette.support_grey_30};
+    border: 1px solid ${props => props.borderColor};
     width: 100%;
     resize: none;
     box-sizing: border-box;
@@ -29,41 +35,31 @@ const TextArea = styled.textarea`
     }
 `;
 
-const ErrorTextArea = styled(TextArea)`
-    border: 1px solid ${palette.support_red};
-`;
-
 function TextAreaField(props) {
 
     const maxMessageLength = props.maxLength;
     const [remainingLength, setRemainingLength] = useState(maxMessageLength);
-    const [isValid, setValid] = useState(false);
+    const [isValid, setValid] = useState(true);
+    const [content, setContent] = useState("");
+    const borderColor = isValid ? palette.support_grey_30 : palette.support_red;
 
     const validateMessageLength = (e) => {
-        let msg = e.target.value;
-        if (msg.length > maxMessageLength) {
-            e.target.value = msg.substring(0, maxMessageLength);
-            return;
-        }
-        setRemainingLength(maxMessageLength - msg.length)
-        validateField(msg);
+        setContent(e.target.value);
+        setRemainingLength(stringValidator.validateLength(e, maxMessageLength));
+        setValid(stringValidator.validateField(e.target.value, props.isValidCondition));
+        props.reportState(props.name, isValid, e.target.value);
     }
-
-    const validateField = (value) => {
-        if (!props.isValidCondition.test(value)) {
-            setValid(false);
-            return;
-        }
-        setValid(true);
-    }
-
-    const StyledTextArea = isValid ? TextArea : ErrorTextArea;
 
     return (
         <Field>
-            <Label htmlFor={"txt" + props.name}>{props.name + ":"}</Label>
-            <StyledTextArea name={"txt" + props.name} onKeyUp={(event) => validateMessageLength(event)}></StyledTextArea>
-            <p id="txtRemainingChars">{remainingLength} caracteres</p>
+            <Label htmlFor={props.name}>{props.name + ":"}</Label>
+            <TextArea
+                borderColor={borderColor}
+                name={props.name}
+                value={content}
+                onChange={validateMessageLength}>
+            </TextArea>
+            <CharactersCount>{remainingLength} caracteres</CharactersCount>
         </Field>
     );
 }

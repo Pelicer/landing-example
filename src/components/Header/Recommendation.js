@@ -14,8 +14,8 @@ const Quote = styled.p`
     color: ${palette.support_grey_70};
 `;
 
-const Author = styled.p`
-    font: ${fonts.subtitle1};
+const Author = styled.span`
+    font: ${fonts.subtitle3};
     color: ${palette.support_grey_70};
     display: inline;
 `;

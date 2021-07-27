@@ -6,7 +6,6 @@ const Message = styled.p`
     font: ${fonts.subtitle2};
     color: ${palette.support_grey_70};
     line-height: 1.5rem;
-    margin-bottom: 0;
 `;
 
 function Content() {
