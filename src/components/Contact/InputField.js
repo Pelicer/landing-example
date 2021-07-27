@@ -1,6 +1,8 @@
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import palette from '../../assets/style/palette.module.scss';
 import fonts from '../../assets/style/fonts.module.scss';
+import { v4 as uuidv4 } from 'uuid';
 
 const Field = styled.div`
     display: flex;
@@ -17,7 +19,7 @@ const Input = styled.input`
     padding: 10px;
     border-radius: 5px;
     outline: none;
-    border: 1px solid rgba(0, 0, 0, 0.3);
+    border: 1px solid ${palette.support_grey_30};
     width: 100%;
     resize: none;
     box-sizing: border-box;
@@ -26,11 +28,31 @@ const Input = styled.input`
     }
 `;
 
+const ErrorInput = styled(Input)`
+    border: 1px solid ${palette.support_red};
+`;
+
 function InputField(props) {
+
+    const [isValid, setValid] = useState(false);
+    const [content, setContent] = useState("");
+
+    const validateField = (event) => {
+        let value = event.target.value;
+        setContent(value);
+        if (props.isValidCondition.test(value)) {
+            setValid(true);
+            return;
+        }
+        setValid(false);
+    }
+
+    const StyledInput = isValid ? Input : ErrorInput;
+
     return (
         <Field>
             <Label htmlFor={"txt" + props.name}>{props.name + ":"}</Label>
-            <Input name={"txt" + props.name} onKeyUp={props.onKeyUp}></Input>
+            <StyledInput key={uuidv4()} color={props.color} name={"txt" + props.name} value={content} onChange={validateField}></StyledInput>
         </Field>
     );
 }

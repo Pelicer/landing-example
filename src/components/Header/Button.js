@@ -4,8 +4,8 @@ import fonts from '../../assets/style/fonts.module.scss';
 
 function HeaderButton(props) {
     const Button = styled.button`
+        grid-column-start: 2;
         cursor: pointer;
-        margin-top: 1rem;
         border: 0;
         border-radius: 5px;
         padding: 15px 10px;

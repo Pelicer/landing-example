@@ -8,6 +8,7 @@ $support-grey-10: #dbdbdb;
 $support-grey-30: #b8b8b8;
 $support-grey-50: #707070;
 $support-grey-70: #2b2b2b;
+$support-red: #ff0000;
 
 :export {
     primary_blue: $primary-blue;
@@ -20,4 +21,5 @@ $support-grey-70: #2b2b2b;
     support_grey_30: $support-grey-30;
     support_grey_50: $support_grey-50;
     support_grey_70: $support-grey-70;
+    support_red: $support-red;
 }
