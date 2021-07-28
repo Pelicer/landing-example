@@ -18,6 +18,14 @@ const notEmptyRegex = /^(?!\s*$).+/;
 
 function Form() {
 
+    const [useModal, setUseModal] = useState(false);
+    const [modalContent, setModalContent] = useState({});
+
+    const closeModal = () => {
+        setUseModal(false);
+        setModalContent({});
+    }
+
     const [requiredFields, setRequiredFields] = useState({
         "Nome": {
             isValid: false,
@@ -52,7 +60,6 @@ function Form() {
     }
 
     const handleSubmit = (event) => {
-        console.log(event);
         event.preventDefault();
         for (let key in requiredFields) {
             if (!requiredFields[key].isValid) {
@@ -75,6 +82,14 @@ function Form() {
                 phoneNumber: requiredFields["Telefone"].content
             }
         }
+        setUseModal(true);
+        setModalContent({
+            image: "Loading",
+            illustration: WorkspaceCat,
+            title: "Sending e-maill",
+            description: "Your e-mail will be sent shortly (if the cat allow)",
+            close: closeModal
+        });
         // email.sendMail(mailpostData);
         return false;
     }
@@ -88,9 +103,11 @@ function Form() {
                 <InputField name="Assunto" reportState={validateField} isValidCondition={notEmptyRegex} />
                 <InputField name="Telefone" reportState={validateField} />
                 <TextAreaField name="Mensagem" reportState={validateField} isValidCondition={notEmptyRegex} maxLength={500} />
-                <Button type="submit" content="Enviar" maxWidth="none" />
+                <Button type="submit" content="Enviar" />
             </StyledForm>
-            {/* <Modal image="Loading" illustration={WorkspaceCat} title="Sending e-mail" description="Your e-mail will be sent shortly (if the cat allow)" /> */}
+            {
+                useModal ? (<Modal content={modalContent} />) : null
+            }
         </div>
     );
 }

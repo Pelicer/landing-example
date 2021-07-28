@@ -1,10 +1,10 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { Loading, Warning, Check, Close } from './FeedbackIcons';
 import styled from 'styled-components';
 import palette from '../../assets/style/palette.module.scss';
 import fonts from '../../assets/style/fonts.module.scss';
 import FeaturedImage from '../../parts/FeaturedImage';
-import Portal from "../../portal/Portal";
 
 const ModalContainer = styled.div`
     display: flex;
@@ -70,6 +70,15 @@ const SuccessIcon = styled(Icon)`
     background-color: ${palette.support_green};
 `;
 
+const CloseSpan = styled.span`
+    cursor: pointer;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: ${palette.support_gre_70};
+`;
+
+
 function Modal(props) {
     let iconDictionary =
     {
@@ -91,24 +100,24 @@ function Modal(props) {
         }
     }
 
-    const ImageIcon = iconDictionary[props.image].styledComponent;
+    const ImageIcon = iconDictionary[props.content.image].styledComponent;
     return (
 
-        <Portal>
+        ReactDOM.createPortal(
             <ModalContainer>
                 <StyledModal>
                     <ImageIcon>
-                        <FeaturedImage image={iconDictionary[props.image].icon} size="30px" />
+                        <FeaturedImage image={iconDictionary[props.content.image].icon} size="30px" />
                     </ImageIcon>
                     <div>
-                        <Title>{props.title}</Title>
-                        <Description>{props.description}</Description>
+                        <Title>{props.content.title}</Title>
+                        <Description>{props.content.description}</Description>
                     </div>
-                    <FeaturedImage image={props.illustration} size="400px" />
+                    <FeaturedImage image={props.content.illustration} size="400px" />
+                    <CloseSpan onClick={props.content.close}>🗙</CloseSpan>
                 </StyledModal>
-            </ModalContainer>
-        </Portal >
-    );
+            </ModalContainer>, document.querySelector('#modal-root'))
+    )
 }
 
 export default Modal;

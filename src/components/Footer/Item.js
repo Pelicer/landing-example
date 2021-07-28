@@ -14,7 +14,7 @@ const ItemWrapper = styled.div`
 
 const Image = styled.img`
     width: 20px;
-    filter: brightness(0) invert(.8);
+    filter: brightness(0) invert(1);
 `;
 
 function Item(props) {
