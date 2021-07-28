@@ -19,6 +19,10 @@ const HeaderSection = styled.section`
     @media (max-width: 992px){
         padding: 0;
     }
+
+    @media (max-width: 768px){
+        padding: 0 ${measures.main_content_margin};
+    }
 `;
 
 const HeaderImage = styled.div`
