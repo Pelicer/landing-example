@@ -11,7 +11,7 @@ const Credit = styled.span`
 function Credits() {
     return (
         <Credit>
-            TK Tech © 2021
+            Foo © 2021
         </Credit >
     )
 }

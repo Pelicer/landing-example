@@ -4,7 +4,7 @@ import { Loading, Warning, Check, Close } from './FeedbackIcons';
 import styled from 'styled-components';
 import palette from '../../assets/style/palette.module.scss';
 import fonts from '../../assets/style/fonts.module.scss';
-import FeaturedImage from '../../parts/FeaturedImage';
+import FeaturedImage from '../../shared/FeaturedImage';
 
 const ModalContainer = styled.div`
     display: flex;
@@ -33,7 +33,7 @@ const StyledModal = styled.div`
 
 const Title = styled.div`
     color: ${palette.support_grey_70};
-    font: ${fonts.h2};
+    font: ${fonts.subtitle1};
     text-align: center;
 `;
 
@@ -113,7 +113,7 @@ function Modal(props) {
                         <Title>{props.content.title}</Title>
                         <Description>{props.content.description}</Description>
                     </div>
-                    <FeaturedImage image={props.content.illustration} size="400px" />
+                    <FeaturedImage image={props.content.illustration}/>
                     <CloseSpan onClick={props.content.close}>🗙</CloseSpan>
                 </StyledModal>
             </ModalContainer>, document.querySelector('#modal-root'))

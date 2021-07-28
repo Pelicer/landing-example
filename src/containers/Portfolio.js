@@ -1,9 +1,13 @@
 import styled from 'styled-components'
+import { useLayoutEffect, useState } from "react";
 import palette from '../assets/style/palette.module.scss';
 import measures from '../assets/style/measures.module.scss';
 import Title from '../components/Portfolio/Title';
 import Item from '../components/Portfolio/Item';
 import { v4 as uuidv4 } from 'uuid';
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const Articles = [
     {
@@ -47,16 +51,47 @@ const PortfolioSection = styled.section`
 const ItemsWrapper = styled.div`
     margin: 50px 0;
     display: grid;
-    grid-template-columns: repeat(3, auto);
     grid-gap: 30px;
     justify-items: center;
+
+    @media (min-width: 992px){
+        grid-template-columns: repeat(3, auto);
+    }
+
+    @media (min-width: 1200px){
+        grid-template-columns: repeat(3, auto);
+    }
+
+    @media (min-width: 1680px){
+        grid-template-columns: repeat(4, auto);
+    }
 `;
 
 function Portfolio() {
+
+    const [width, setWidth] = useState(0);
+    useLayoutEffect(() => {
+        function updateSize() {
+            setWidth(window.innerWidth);
+        }
+        window.addEventListener('resize', updateSize);
+        updateSize();
+    });
+
+    const settings = {
+        dots: true,
+        // autoplay: true,
+        infinite: true,
+        // autoplay: 2000,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+    };
+
+    const ParentElement = (width > 992) ? ItemsWrapper : Slider;
     return (
         <PortfolioSection>
             <Title />
-            <ItemsWrapper>
+            <ParentElement {...settings}>
                 {
                     Articles.map((article) => {
                         return <Item
@@ -67,7 +102,7 @@ function Portfolio() {
                         </Item>
                     })
                 }
-            </ItemsWrapper>
+            </ParentElement>
         </PortfolioSection>
     );
 }

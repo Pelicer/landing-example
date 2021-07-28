@@ -7,6 +7,10 @@ import { stringValidator } from '../../utils/Validations'
 const Field = styled.div`
     display: flex;
     flex-direction: column;
+
+    @media (max-width: 992px){
+        margin-top: 10px;
+    }
 `;
 
 const Label = styled.label`

@@ -9,6 +9,10 @@ const Field = styled.div`
     flex-direction: column;
     grid-column-start: 1;
     grid-column-end: 3;
+
+    @media (max-width: 992px){
+        margin-top: 10px;
+    }
 `;
 
 const Label = styled.label`

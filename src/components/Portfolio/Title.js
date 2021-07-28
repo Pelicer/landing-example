@@ -6,8 +6,8 @@ const TitleArea = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 0 100px;
     text-align: center;
+    margin-bottom: 35px;
 `;
 
 const TitleParagraph = styled.p`
@@ -20,6 +20,7 @@ const ContentParagraph = styled.p`
     margin-top: 0;
     font: ${fonts.body1};
     color: ${palette.support_grey_70};
+    max-width: 500px;
 `;
 
 

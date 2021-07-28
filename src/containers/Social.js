@@ -28,6 +28,19 @@ const SocialBar = styled.section`
     display: flex;
     background-color: ${palette.support_grey_05};
     justify-content: space-around;
+
+    @media (min-width: 500px){
+        padding: 0 50px;
+    }
+    @media (min-width: 768px){
+        padding: 0 50px;
+    }
+    @media (min-width: 992px){
+        padding: 0 100px;
+    }
+    @media (min-width: 1680px){
+        padding: 0 300px;
+    }
 `;
 
 function Social() {

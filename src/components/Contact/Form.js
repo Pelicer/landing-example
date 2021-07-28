@@ -3,15 +3,29 @@ import styled from 'styled-components';
 import Title from './Title';
 import InputField from './InputField';
 import TextAreaField from './TextAreaField';
-import Button from '../../parts/Button';
+import Button from '../../shared/Button';
 import { email } from '../../api/EmailAPI';
 import Modal from '../Modal/Modal';
 import WorkspaceCat from '../../assets/illustrations/workspace-cat.svg'
 import GirlReading from '../../assets/illustrations/girl-reading.svg'
 
+const FormContainer = styled.div`
+    margin-left: 50px;
+    @media (max-width: 762px){
+        margin: 0;
+    }
+`;
 const StyledForm = styled.form`
     display: grid;
     grid-gap: 10px 30px;
+    grid-template-columns: repeat(2, 1fr);
+
+    @media (max-width: 992px) {
+        display: block;
+        button{
+            width: 100%;
+        }
+    }
 `;
 
 const mailRegex = /^(([^<>()[\]\\.,;:\s@]+(\.[^<>()[\]\\.,;:\s@]+)*)|(.+))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -125,7 +139,7 @@ function Form() {
     }
 
     return (
-        <div>
+        <FormContainer>
             <Title />
             <StyledForm onSubmit={handleSubmit}>
                 <InputField isValid={requiredFields["Nome"].isValid} isUnchanged={requiredFields["Nome"].isUnchanged} content={requiredFields["Nome"].content} name="Nome" tip="" reportState={validateField} isValidCondition={notEmptyRegex} />
@@ -138,7 +152,7 @@ function Form() {
             {
                 useModal ? (<Modal content={modalContent} />) : null
             }
-        </div>
+        </FormContainer>
     );
 }
 

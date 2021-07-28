@@ -17,6 +17,10 @@ const CustomSizedImage = styled.img`
         filter: brightness(0) invert(0)
     }
     transition: filter ease-in-out .3s;
+    
+    @media (max-width: 768px){
+        width: 25px;
+    }
 `;
 
 function SocialApp(props) {
