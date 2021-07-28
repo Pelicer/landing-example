@@ -90,11 +90,11 @@ function Modal(props) {
             icon: Warning.default,
             styledComponent: WarningIcon
         },
-        "Check": {
+        "Success": {
             icon: Check.default,
             styledComponent: SuccessIcon
         },
-        "Close": {
+        "Error": {
             icon: Close.default,
             styledComponent: ErrorIcon
         }

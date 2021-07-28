@@ -39,15 +39,15 @@ function TextAreaField(props) {
 
     const maxMessageLength = props.maxLength;
     const [remainingLength, setRemainingLength] = useState(maxMessageLength);
-    const [isValid, setValid] = useState(true);
-    const [content, setContent] = useState("");
-    const borderColor = isValid ? palette.support_grey_30 : palette.support_red;
+    const borderColor = (props.isValid || !props.isValid && props.isUnchanged) ? palette.support_grey_30 : palette.support_red;
 
     const validateMessageLength = (e) => {
-        setContent(e.target.value);
         setRemainingLength(stringValidator.validateLength(e, maxMessageLength));
-        setValid(stringValidator.validateField(e.target.value, props.isValidCondition));
-        props.reportState(props.name, isValid, e.target.value);
+        props.reportState(
+            props.name,
+            stringValidator.validateField(e.target.value, props.isValidCondition),
+            e.target.value
+        );
     }
 
     return (
@@ -56,7 +56,7 @@ function TextAreaField(props) {
             <TextArea
                 borderColor={borderColor}
                 name={props.name}
-                value={content}
+                value={props.content}
                 onChange={validateMessageLength}>
             </TextArea>
             <CharactersCount>{remainingLength} caracteres</CharactersCount>

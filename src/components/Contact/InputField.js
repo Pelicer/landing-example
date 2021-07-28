@@ -30,23 +30,23 @@ const Input = styled.input`
 
 function InputField(props) {
 
-    const [isValid, setValid] = useState(true);
-    const [content, setContent] = useState("");
-    const borderColor = isValid ? palette.support_grey_30 : palette.support_red;
+    const borderColor = (props.isValid || !props.isValid && props.isUnchanged) ? palette.support_grey_30 : palette.support_red;
 
     const validate = (event) => {
-        setContent(event.target.value);
-        setValid(stringValidator.validateField(event.target.value, props.isValidCondition))
-        props.reportState(props.name, isValid, event.target.value);
+        props.reportState(
+            props.name,
+            stringValidator.validateField(event.target.value, props.isValidCondition),
+            event.target.value
+        );
     }
 
     return (
         <Field>
-            <Label htmlFor={props.name}>{props.name + ":"}</Label>
+            <Label htmlFor={props.name}>{props.name + props.tip + ":"}</Label>
             <Input
                 key={"form-input-field"}
                 borderColor={borderColor}
-                value={content}
+                value={props.content}
                 name={props.name}
                 onChange={validate}>
             </Input>

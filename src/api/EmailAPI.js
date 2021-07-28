@@ -2,19 +2,22 @@ import axios from "axios";
 
 export class EmailAPI {
 
-    sendMail(content) {
-        axios(
-            {
-                method: 'POST',
-                url: './api/v1/contact',
-                data: JSON.stringify(content)
+    async sendMail(content) {
+        console.log(content);
+        let response = new Promise((resolve, reject) => {
+            axios(
+                {
+                    method: 'GET',
+                    url: 'https://jsonplaceholder.typicode.com/todos/1'
+                }
+            ).then(response => {
+                resolve(response);
             }
-        ).then(response => {
-            console.log(response);
-        }
-        ).catch(error => {
-            console.error(error);
-        })
+            ).catch(error => {
+                reject(error);
+            })
+        });
+        return response;
     }
 
 }

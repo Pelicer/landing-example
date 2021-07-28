@@ -7,6 +7,7 @@ import Button from '../../parts/Button';
 import { email } from '../../api/EmailAPI';
 import Modal from '../Modal/Modal';
 import WorkspaceCat from '../../assets/illustrations/workspace-cat.svg'
+import GirlReading from '../../assets/illustrations/girl-reading.svg'
 
 const StyledForm = styled.form`
     display: grid;
@@ -29,23 +30,28 @@ function Form() {
     const [requiredFields, setRequiredFields] = useState({
         "Nome": {
             isValid: false,
-            content: ""
+            content: "",
+            isUnchanged: true
         },
         "Email": {
             isValid: false,
-            content: ""
+            content: "",
+            isUnchanged: true
         },
         "Assunto": {
             isValid: false,
-            content: ""
+            content: "",
+            isUnchanged: true
         },
         "Telefone": {
             isValid: true,
-            content: ""
+            content: "",
+            tip: " (optional)"
         },
         "Mensagem": {
             isValid: false,
-            content: ""
+            content: "",
+            isUnchanged: true
         }
     });
 
@@ -53,56 +59,80 @@ function Form() {
         setRequiredFields(prevRequiredFields => ({
             ...prevRequiredFields, [field]: {
                 isValid: isValid,
-                content: content
+                content: content,
+                isUnchanged: false
             }
         }))
-        console.log(requiredFields);
     }
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        let isFormReady = true;
         for (let key in requiredFields) {
             if (!requiredFields[key].isValid) {
-                console.warn("campos faltando")
-                //visually notify that there's an invalid field
-                return;
+                setRequiredFields(prevRequiredFields => ({
+                    ...prevRequiredFields, [key]: {
+                        isValid: false,
+                        isUnchanged: false
+                    }
+                }))
+                isFormReady = false;
             }
         }
-        let mailpostData = {
-            lang: "pt-BR",
-            sender: {
-                name: requiredFields["Nome"].content,
-                mail: "willpelicer@gmail.com"
-            },
-            mail: {
-                subject: requiredFields["Assunto"].content,
-                body: requiredFields["Mensagem"].content
-            },
-            additionalInfo: {
-                phoneNumber: requiredFields["Telefone"].content
+        if (isFormReady) {
+            let mailpostData = {
+                lang: "pt-BR",
+                sender: {
+                    name: requiredFields["Nome"].content,
+                    mail: "willpelicer@gmail.com"
+                },
+                mail: {
+                    subject: requiredFields["Assunto"].content,
+                    body: requiredFields["Mensagem"].content
+                },
+                additionalInfo: {
+                    phoneNumber: requiredFields["Telefone"].content
+                }
             }
+            setUseModal(true);
+            setModalContent({
+                image: "Loading",
+                illustration: WorkspaceCat,
+                title: "Sending e-maill",
+                description: "Your e-mail will be sent shortly (if the cat allow)",
+                close: closeModal
+            });
+            email.sendMail(mailpostData).then(() => {
+                setModalContent({
+                    image: "Success",
+                    illustration: GirlReading,
+                    title: "Email sent successfully",
+                    description: "We are raeding your email and will get back to you shortly.",
+                    close: closeModal
+                });
+
+            }).catch(() => {
+                setModalContent({
+                    image: "Error",
+                    illustration: WorkspaceCat,
+                    title: "Something went wrong",
+                    description: "We could not send your e-mail. Please, try again later.",
+                    close: closeModal
+                });
+            });
+            return false;
         }
-        setUseModal(true);
-        setModalContent({
-            image: "Loading",
-            illustration: WorkspaceCat,
-            title: "Sending e-maill",
-            description: "Your e-mail will be sent shortly (if the cat allow)",
-            close: closeModal
-        });
-        // email.sendMail(mailpostData);
-        return false;
     }
 
     return (
         <div>
             <Title />
             <StyledForm onSubmit={handleSubmit}>
-                <InputField name="Nome" reportState={validateField} isValidCondition={notEmptyRegex} />
-                <InputField name="Email" reportState={validateField} isValidCondition={mailRegex} />
-                <InputField name="Assunto" reportState={validateField} isValidCondition={notEmptyRegex} />
-                <InputField name="Telefone" reportState={validateField} />
-                <TextAreaField name="Mensagem" reportState={validateField} isValidCondition={notEmptyRegex} maxLength={500} />
+                <InputField isValid={requiredFields["Nome"].isValid} isUnchanged={requiredFields["Nome"].isUnchanged} content={requiredFields["Nome"].content} name="Nome" tip="" reportState={validateField} isValidCondition={notEmptyRegex} />
+                <InputField isValid={requiredFields["Email"].isValid} isUnchanged={requiredFields["Email"].isUnchanged} content={requiredFields["Email"].content} name="Email" tip="" reportState={validateField} isValidCondition={mailRegex} />
+                <InputField isValid={requiredFields["Assunto"].isValid} isUnchanged={requiredFields["Assunto"].isUnchanged} content={requiredFields["Assunto"].content} name="Assunto" tip="" reportState={validateField} isValidCondition={notEmptyRegex} />
+                <InputField isValid={requiredFields["Telefone"].isValid} isUnchanged={requiredFields["Telefone"].isUnchanged} content={requiredFields["Telefone"].content} name="Telefone" tip={requiredFields["Telefone"].tip} reportState={validateField} />
+                <TextAreaField isValid={requiredFields["Mensagem"].isValid} isUnchanged={requiredFields["Mensagem"].isUnchanged} content={requiredFields["Mensagem"].content} name="Mensagem" reportState={validateField} isValidCondition={notEmptyRegex} maxLength={500} />
                 <Button type="submit" content="Enviar" />
             </StyledForm>
             {
