@@ -29,16 +29,13 @@ const SocialBar = styled.section`
     background-color: ${palette.support_grey_05};
     justify-content: space-around;
 
-    @media (min-width: 500px){
+    @media (max-width: 768px){
         padding: 0 50px;
     }
-    @media (min-width: 768px){
-        padding: 0 50px;
-    }
-    @media (min-width: 992px){
+    @media (max-width: 992px){
         padding: 0 100px;
     }
-    @media (min-width: 1680px){
+    @media (max-width: 1680px){
         padding: 0 300px;
     }
 `;
