@@ -1,9 +1,7 @@
 import styled from 'styled-components'
 import FeaturedImage from '../shared/FeaturedImage'
-import Title from '../components/Header/Title'
-import Content from '../components/Header/Content'
 import Button from '../shared/Button'
-import Recommendation from '../components/Header/Recommendation'
+import { Title, Content, Recommendation } from '../components/Header/index'
 import palette from '../assets/style/palette.module.scss';
 import measures from '../assets/style/measures.module.scss';
 import GirlTypying from '../assets/illustrations/girl-typing.svg'
@@ -57,10 +55,10 @@ function Header() {
                 <FeaturedImage image={GirlTypying} />
             </HeaderImage>
             <HeaderContent>
-                <Title />
-                <Content />
+                <Title title="Transform your data analytics in under 10 minutes" />
+                <Content message="Streamline time and value for your data engineers, scientists, and analytics using our cloud-based data warehouse platform." />
                 <Button content="Watch 2-Min Demo Video" maxWidth="250px" />
-                <Recommendation />
+                <Recommendation recommender="GoDaddy" quote="Panoply enables non technical people to get questions answered more easily" author="Nissim, Director of Product" />
             </HeaderContent>
         </HeaderSection>
     );

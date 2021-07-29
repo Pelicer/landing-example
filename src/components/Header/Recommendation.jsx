@@ -20,16 +20,16 @@ const Author = styled.span`
     display: inline;
 `;
 
-function Recommendation() {
+function Recommendation(props) {
     return (
         <div>
             <Recommender>
-                GoDaddy
+                {props.recommender}
             </Recommender>
             <Quote>
-                "Panoply enables non technical people to get questions answered more easily"
+                "{props.quote}"
                 <Author>
-                    - Nissim, Director of Product
+                    - {props.author}
                 </Author>
             </Quote>
         </div>

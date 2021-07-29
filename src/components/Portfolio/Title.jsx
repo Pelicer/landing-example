@@ -23,12 +23,11 @@ const ContentParagraph = styled.p`
     max-width: 500px;
 `;
 
-
-function Title() {
+function Title(props) {
     return (
         <TitleArea>
-            <TitleParagraph>Discover Your Insights</TitleParagraph>
-            <ContentParagraph>Make data-driven decisions with confidence. Panoply provides a single source of data truth taht's compatible with all major business intelligence tools.</ContentParagraph>
+            <TitleParagraph>{props.title}</TitleParagraph>
+            <ContentParagraph>{props.subtitle}</ContentParagraph>
         </TitleArea>
     );
 }

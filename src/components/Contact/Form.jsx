@@ -5,7 +5,7 @@ import InputField from './InputField';
 import TextAreaField from './TextAreaField';
 import Button from '../../shared/Button';
 import { email } from '../../api/EmailAPI';
-import Modal from '../Modal/Modal';
+import { Modal } from '../Modal/index';
 import WorkspaceCat from '../../assets/illustrations/workspace-cat.svg'
 import GirlReading from '../../assets/illustrations/girl-reading.svg'
 
@@ -15,6 +15,7 @@ const FormContainer = styled.div`
         margin: 0;
     }
 `;
+
 const StyledForm = styled.form`
     display: grid;
     grid-gap: 10px 30px;
@@ -28,13 +29,16 @@ const StyledForm = styled.form`
     }
 `;
 
-const mailRegex = /^(([^<>()[\]\\.,;:\s@]+(\.[^<>()[\]\\.,;:\s@]+)*)|(.+))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-const notEmptyRegex = /^(?!\s*$).+/;
-
+/*
+Not sure if, architecture wise, this component should exists,
+and if itself is not a container
+*/
 function Form() {
 
     const [useModal, setUseModal] = useState(false);
     const [modalContent, setModalContent] = useState({});
+    const mailRegex = /^(([^<>()[\]\\.,;:\s@]+(\.[^<>()[\]\\.,;:\s@]+)*)|(.+))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const notEmptyRegex = /^(?!\s*$).+/;
 
     const closeModal = () => {
         setUseModal(false);
@@ -140,7 +144,7 @@ function Form() {
 
     return (
         <FormContainer>
-            <Title />
+            <Title title="Nos mande um e-mail" emailAddress="foo@bar.com.br" />
             <StyledForm onSubmit={handleSubmit}>
                 <InputField isValid={requiredFields["Nome"].isValid} isUnchanged={requiredFields["Nome"].isUnchanged} content={requiredFields["Nome"].content} name="Nome" tip="" reportState={validateField} isValidCondition={notEmptyRegex} />
                 <InputField isValid={requiredFields["Email"].isValid} isUnchanged={requiredFields["Email"].isUnchanged} content={requiredFields["Email"].content} name="Email" tip="" reportState={validateField} isValidCondition={mailRegex} />

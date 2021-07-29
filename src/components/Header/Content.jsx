@@ -8,11 +8,9 @@ const Message = styled.p`
     line-height: 1.5rem;
 `;
 
-function Content() {
+function Content(props) {
     return (
-        <Message>
-            Streamline time and value for your data engineers, scientists, and analytics using our cloud-based data warehouse platform.
-        </Message>
+        <Message>{props.message}</Message>
     );
 }
 

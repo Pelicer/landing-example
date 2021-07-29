@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import measures from '../assets/style/measures.module.scss'
 import FeaturedImage from '../shared/FeaturedImage';
-import Form from '../components/Contact/Form';
+import { Form } from '../components/Contact/index';
 import Mail from '../assets/illustrations/mail.svg';
 
 const Contact = styled.section`
@@ -18,7 +18,6 @@ const Contact = styled.section`
         grid-template-columns: 1fr;
         padding: 0 ${measures.main_content_margin};
     }
-
 `;
 
 const ImageWrapper = styled.div`

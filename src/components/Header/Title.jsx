@@ -8,11 +8,9 @@ const HeaderTitle = styled.p`
     margin: 0;
 `;
 
-function Title() {
+function Title(props) {
     return (
-        <HeaderTitle>
-            Transform your data analytics in under 10 minutes
-        </HeaderTitle>
+        <HeaderTitle>{props.title}</HeaderTitle>
     );
 }
 

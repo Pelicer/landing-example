@@ -7,6 +7,7 @@ const ArticleContainer = styled.div`
     display: flex;
     place-content: center;
 `;
+
 const Article = styled.div`
     border-radius: 10px;
     background-image: linear-gradient(to bottom, ${palette.support_grey_05}, ${palette.secondary_purple}20);
@@ -22,6 +23,7 @@ const Article = styled.div`
         margin: 0 30px;
     }
 `;
+
 const Icon = styled.img`
     width: 35px;
 `;

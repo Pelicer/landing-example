@@ -1,7 +1,6 @@
 import styled from 'styled-components'
 import palette from '../assets/style/palette.module.scss';
-import SocialMedia from '../components/Footer/SocialMedia';
-import Credits from '../components/Footer/Credits';
+import { SocialMedia, Credits } from '../components/Footer/index';
 
 const FooterWrapper = styled.div`
     background-image: linear-gradient(to right, ${palette.primary_blue}, ${palette.secondary_purple});
@@ -18,7 +17,7 @@ function Footer() {
     return (
         <FooterWrapper>
             <SocialMedia />
-            <Credits />
+            <Credits to="Foo © 2021" />
         </FooterWrapper >
     )
 }

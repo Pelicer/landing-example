@@ -2,8 +2,7 @@ import styled from 'styled-components'
 import { useLayoutEffect, useState } from "react";
 import palette from '../assets/style/palette.module.scss';
 import measures from '../assets/style/measures.module.scss';
-import Title from '../components/Portfolio/Title';
-import Item from '../components/Portfolio/Item';
+import { Title, Item } from '../components/Portfolio/index';
 import { v4 as uuidv4 } from 'uuid';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -80,9 +79,9 @@ function Portfolio() {
 
     const settings = {
         dots: true,
-        // autoplay: true,
+        autoplay: true,
         infinite: true,
-        // autoplay: 2000,
+        autoplay: 2000,
         slidesToShow: 1,
         slidesToScroll: 1,
     };
@@ -90,7 +89,7 @@ function Portfolio() {
     const ParentElement = (width > 992) ? ItemsWrapper : Slider;
     return (
         <PortfolioSection>
-            <Title />
+            <Title title="Discover Your Insights" subtitle="Make data-driven decisions with confidence. Panoply provides a single source of data truth taht's compatible with all major business intelligence tools." />
             <ParentElement {...settings}>
                 {
                     Articles.map((article) => {

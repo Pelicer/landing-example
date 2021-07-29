@@ -14,11 +14,11 @@ const Subtitle = styled.p`
     color: ${palette.support_grey_70};
 `;
 
-function Title() {
+function Title(props) {
     return (
         <div>
-            <TitleParagraph>Nos mande um e-mail</TitleParagraph>
-            <Subtitle>foo@bar.com</Subtitle>
+            <TitleParagraph>{props.title}</TitleParagraph>
+            <Subtitle>{props.emailAddress}</Subtitle>
         </div>
     );
 }

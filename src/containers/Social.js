@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import palette from '../assets/style/palette.module.scss';
-import SocialApp from '../components/Social/SocialApp'
+import { SocialApp } from '../components/Social/index'
 import { v4 as uuidv4 } from 'uuid';
 import { facebook, instagram, linkedin, twitter } from '../components/Social/SocialIcons';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Loading, Warning, Check, Close } from './FeedbackIcons';
+import { Loading, Warning, Check, Close } from './FeedbackIcons.js';
 import styled from 'styled-components';
 import palette from '../../assets/style/palette.module.scss';
 import fonts from '../../assets/style/fonts.module.scss';
@@ -118,7 +118,7 @@ function Modal(props) {
             <ModalContainer>
                 <StyledModal>
                     <ImageIcon>
-                        <IconImage src={iconDictionary[props.content.image].icon}  />
+                        <IconImage src={iconDictionary[props.content.image].icon} />
                     </ImageIcon>
                     <div>
                         <Title>{props.content.title}</Title>

@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 
-
 const Social = styled.a`
     padding: 30px 0;
     &:hover{

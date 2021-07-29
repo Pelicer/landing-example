@@ -8,11 +8,9 @@ const Credit = styled.span`
     font: ${fonts.body1};
 `;
 
-function Credits() {
+function Credits(props) {
     return (
-        <Credit>
-            Foo © 2021
-        </Credit >
+        <Credit>{props.to}</Credit >
     )
 }
 

@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import Item from './Item';
 import { v4 as uuidv4 } from 'uuid';
-import { facebook, instagram, linkedin, twitter } from '../Social/SocialIcons';
+import { facebook, instagram, linkedin, twitter } from '../Social/SocialIcons.js';
 
 const SocialMedias = [
     {
