@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import palette from '../../assets/style/palette.module.scss';
 import fonts from '../../assets/style/fonts.module.scss';
@@ -34,7 +34,7 @@ const Input = styled.input`
 
 function InputField(props) {
 
-    const borderColor = (props.isValid || !props.isValid && props.isUnchanged) ? palette.support_grey_30 : palette.support_red;
+    const borderColor = (props.isValid || (!props.isValid && props.isUnchanged)) ? palette.support_grey_30 : palette.support_red;
 
     const validate = (event) => {
         props.reportState(
