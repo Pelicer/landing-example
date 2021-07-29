@@ -23,7 +23,7 @@ const StyledModal = styled.div`
     border-radius: 10px;
     padding: 30px;
     background-color: ${palette.support_white};
-    width: 50%;
+    width: 60%;
     height: 50%;
     display: flex;
     align-items: center;
@@ -52,6 +52,17 @@ const Icon = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+`;
+
+const IconImage = styled.img`
+    width: 30px;
+`;
+
+const ImageContainer = styled.div`
+display: block;
+    @media (max-width: 768px){
+        display: none;
+    }
 `;
 
 const LoadingIcon = styled(Icon)`
@@ -107,13 +118,15 @@ function Modal(props) {
             <ModalContainer>
                 <StyledModal>
                     <ImageIcon>
-                        <FeaturedImage image={iconDictionary[props.content.image].icon} size="30px" />
+                        <IconImage src={iconDictionary[props.content.image].icon}  />
                     </ImageIcon>
                     <div>
                         <Title>{props.content.title}</Title>
                         <Description>{props.content.description}</Description>
                     </div>
-                    <FeaturedImage image={props.content.illustration}/>
+                    <ImageContainer>
+                        <FeaturedImage image={props.content.illustration} />
+                    </ImageContainer>
                     <CloseSpan onClick={props.content.close}>🗙</CloseSpan>
                 </StyledModal>
             </ModalContainer>, document.querySelector('#modal-root'))
