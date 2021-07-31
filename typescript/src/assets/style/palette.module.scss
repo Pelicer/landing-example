@@ -1,0 +1,20 @@
+$primary-blue: #3118b1;
+$secondary-purple: #6837c6;
+
+$support-white: #ffffff;
+$support-grey-05: #eeeeee;
+$support-grey-70: #2b2b2b;
+$support-yellow: #f7ce55;
+$support-red: #fb605f;
+$support-green: #11994b;
+
+:export {
+    primary_blue: $primary-blue;
+    secondary_purple: $secondary-purple;
+    support_white: $support-white;
+    support_grey_05: $support_grey-05;
+    support_grey_70: $support-grey-70;
+    support_red: $support-red;
+    support_yellow: $support-yellow;
+    support_green: $support-green;
+}

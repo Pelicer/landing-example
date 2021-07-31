@@ -1,0 +1,32 @@
+@font-face {
+    font-family: nunito-regular;
+    src: url(../fonts/NunitoSans-Regular.ttf);
+}
+
+@font-face {
+    font-family: nunito-semibold;
+    src: url(../fonts/NunitoSans-SemiBold.ttf);
+}
+
+@font-face {
+    font-family: nunito-bold;
+    src: url(../fonts/NunitoSans-Bold.ttf);
+}
+
+$title: 38px nunito-bold;
+$subtitle1: 27px nunito-regular;
+$subtitle2: 13px nunito-bold;
+$subtitle3: 13px nunito-regular;
+$body1: 14px nunito-regular;
+$body2: 18px nunito-regular;
+$button: 18px nunito-regular;
+
+:export {
+    h2: $title;
+    subtitle1: $subtitle1;
+    subtitle2: $subtitle2;
+    subtitle3: $subtitle3;
+    body1: $body1;
+    body2: $body2;
+    button1: $button;
+}
