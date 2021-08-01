@@ -5,8 +5,6 @@ import { InputField } from './InputField';
 import { TextAreaField } from './TextAreaField';
 import Button from '../../shared/Button';
 import { email } from '../../api/EmailAPI';
-import { Modal, IModalContent } from '../Modal/index';
-import { SendingEmail, EmailSent, EmailError } from '../Modal/ModalStates'
 
 const FormContainer = styled.div`
     margin-left: 50px;
@@ -32,16 +30,10 @@ interface IFormFields {
     name: string; isValid: boolean; content: string; isUnchanged: boolean; tip: string; isValidCondition: RegExp | undefined;
 }
 
-export const Form: React.FC<{ data: Array<IFormFields> }> = (props) => {
+export const Form: React.FC<{ data: Array<IFormFields>; reportSendProgress: Function; }> = (props) => {
 
-    const closeModal = () => {
-        setUseModal(false);
-    }
-
-    const [useModal, setUseModal] = useState(false);
-    const [modalContent, setModalContent] = useState<IModalContent>({ image: "", title: "", description: "", illustration: "", close: closeModal });
     const [requiredFields, setRequiredFields] = useState(props.data);
-
+    
     const validateField = (field: string, isValid: boolean, content: string) => {
         setRequiredFields(requiredFields.map(item => item.name === field ? {
             ...item,
@@ -68,17 +60,16 @@ export const Form: React.FC<{ data: Array<IFormFields> }> = (props) => {
         }));
 
         if (isFormReady) {
-            setUseModal(true);
-            setModalContent(SendingEmail(closeModal));
+            props.reportSendProgress("SENDING");
             email.sendMail(requiredFields.find(field => field.name === "Nome")!.content,
                 requiredFields.find(field => field.name === "Email")!.content,
                 requiredFields.find(field => field.name === "Assunto")!.content,
                 requiredFields.find(field => field.name === "Telefone")!.content,
                 requiredFields.find(field => field.name === "Mensagem")!.content).then(() => {
-                    setModalContent(EmailSent(closeModal));
+                    props.reportSendProgress("SENT");
 
                 }).catch(() => {
-                    setModalContent(EmailError(closeModal));
+                    props.reportSendProgress("ERROR");
                 });
             return false;
         }
@@ -95,9 +86,6 @@ export const Form: React.FC<{ data: Array<IFormFields> }> = (props) => {
                 <TextAreaField {...requiredFields.find(field => field.name === "Mensagem")!} reportState={validateField} maxLength={500} />
                 <Button type="submit" content="Enviar" />
             </StyledForm>
-            {
-                useModal ? (<Modal {...modalContent} />) : null
-            }
         </FormContainer>
     );
 }

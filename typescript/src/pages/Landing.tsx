@@ -1,7 +1,7 @@
 import Header from '../containers/Header';
 import SocialBar from '../containers/Social';
 import Portfolio from '../containers/Portfolio';
-import ContactForm from '../containers/Contact';
+import Contact from '../containers/Contact';
 import Footer from '../containers/Footer';
 
 const Landing: React.FC = () => {
@@ -10,7 +10,7 @@ const Landing: React.FC = () => {
             <Header />
             <SocialBar />
             <Portfolio />
-            <ContactForm />
+            <Contact />
             <Footer />
         </div>
     );

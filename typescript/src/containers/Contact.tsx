@@ -3,8 +3,11 @@ import measures from '../assets/style/measures.module.scss'
 import FeaturedImage from '../shared/FeaturedImage';
 import { Form } from '../components/Contact/index';
 import Mail from '../assets/illustrations/mail.svg';
+import { Modal, IModalContent } from '../components/Modal/index';
+import React, { useState } from 'react';
+import { SendingEmail, EmailSent, EmailError } from '../components/Modal/ModalStates'
 
-const Contact = styled.section`
+const StyledContact = styled.section`
     margin: 50px 0;
     padding: 0 ${measures.main_content_margin};
     display: grid;
@@ -75,15 +78,41 @@ const FormFields = [
     }
 ];
 
-const Social: React.FC = () => {
+const Contact: React.FC = () => {
+
+    const closeModal = () => {
+        setUseModal(false);
+    }
+
+    const reportSendProgress = (content: string) => {
+        setUseModal(true);
+        switch (content) {
+            case "SENDING":
+                setModalContent(SendingEmail(closeModal));
+                break;
+            case "SENT":
+                setModalContent(EmailSent(closeModal));
+                break;
+            case "ERROR":
+                setModalContent(EmailError(closeModal));
+                break;
+        }
+    }
+
+    const [useModal, setUseModal] = useState(false);
+    const [modalContent, setModalContent] = useState<IModalContent>({ image: "", title: "", description: "", illustration: "", close: closeModal });
+
     return (
-        <Contact>
+        <StyledContact>
             <ImageWrapper>
                 <FeaturedImage image={Mail} />
             </ImageWrapper>
-            <Form data={FormFields} />
-        </Contact>
+            <Form data={FormFields} reportSendProgress={reportSendProgress} />
+            {
+                useModal ? (<Modal {...modalContent} />) : null
+            }
+        </StyledContact>
     );
 }
 
-export default Social;
+export default Contact;
