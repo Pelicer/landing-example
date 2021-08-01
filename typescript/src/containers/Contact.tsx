@@ -30,13 +30,58 @@ const ImageWrapper = styled.div`
     }
 `;
 
+const mailRegex = /^(([^<>()[\]\\.,;:\s@]+(\.[^<>()[\]\\.,;:\s@]+)*)|(.+))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const notEmptyRegex = /^(?!\s*$).+/;
+const FormFields = [
+    {
+        name: "Nome",
+        isValid: false,
+        content: "",
+        isUnchanged: true,
+        tip: "",
+        isValidCondition: notEmptyRegex
+    },
+    {
+        name: "Email",
+        isValid: false,
+        content: "",
+        isUnchanged: true,
+        tip: "",
+        isValidCondition: mailRegex
+    },
+    {
+        name: "Assunto",
+        isValid: false,
+        content: "",
+        isUnchanged: true,
+        tip: "",
+        isValidCondition: notEmptyRegex
+    },
+    {
+        name: "Telefone",
+        isValid: true,
+        content: "",
+        isUnchanged: true,
+        tip: " (optional)",
+        isValidCondition: undefined
+    },
+    {
+        name: "Mensagem",
+        isValid: false,
+        content: "",
+        isUnchanged: true,
+        tip: "",
+        isValidCondition: notEmptyRegex
+    }
+];
+
 const Social: React.FC = () => {
     return (
         <Contact>
             <ImageWrapper>
                 <FeaturedImage image={Mail} />
             </ImageWrapper>
-            <Form />
+            <Form data={FormFields} />
         </Contact>
     );
 }

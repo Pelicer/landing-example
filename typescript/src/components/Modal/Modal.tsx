@@ -89,8 +89,15 @@ const CloseSpan = styled.span`
     color: ${palette.support_gre_70};
 `;
 
+export interface IModalContent {
+    image: string;
+    title: string;
+    description: string;
+    illustration: string;
+    close: Function;
+}
 
-export const Modal: React.FC<{ content: { image: string; title: string; description: string; illustration: string; close: Function; } }> = (props) => {
+export const Modal: React.FC<IModalContent> = (props) => {
     let iconDictionary: Array<{ name: string, icon: string; styledComponent: any; }> =
         [
             {
@@ -116,7 +123,7 @@ export const Modal: React.FC<{ content: { image: string; title: string; descript
         ]
 
     const Styled = iconDictionary.filter((icon) => {
-        return icon.name === props.content.image
+        return icon.name === props.image
     })[0];
     const IconComponent = Styled.styledComponent;
     return (
@@ -128,13 +135,13 @@ export const Modal: React.FC<{ content: { image: string; title: string; descript
                         <IconImage src={Styled.icon} />
                     </IconComponent>
                     <div>
-                        <Title>{props.content.title}</Title>
-                        <Description>{props.content.description}</Description>
+                        <Title>{props.title}</Title>
+                        <Description>{props.description}</Description>
                     </div>
                     <ImageContainer>
-                        <FeaturedImage image={props.content.illustration} />
+                        <FeaturedImage image={props.illustration} />
                     </ImageContainer>
-                    <CloseSpan onClick={props.content.close()}>🗙</CloseSpan>
+                    <CloseSpan onClick={props.close()}>🗙</CloseSpan>
                 </StyledModal>
             </ModalContainer>, document.querySelector('#modal-root')!)
     )

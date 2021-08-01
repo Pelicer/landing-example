@@ -36,7 +36,7 @@ const Input = styled.input<StyledProps>`
     }
 `;
 
-export const InputField: React.FC<{ isValid: boolean; isUnchanged: boolean; isValidCondition: RegExp | undefined, reportState: Function; name: string; content: string; tip: string; }> = (props) => {
+export const InputField: React.FC<{ name: string; isValid: boolean; content: string; isUnchanged: boolean; tip: string; isValidCondition: RegExp | undefined, reportState: Function; }> = (props) => {
 
     const borderColor = (props.isValid || (!props.isValid && props.isUnchanged)) ? palette.support_grey_30 : palette.support_red;
 

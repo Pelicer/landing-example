@@ -5,9 +5,8 @@ import { InputField } from './InputField';
 import { TextAreaField } from './TextAreaField';
 import Button from '../../shared/Button';
 import { email } from '../../api/EmailAPI';
-import { Modal } from '../Modal/index';
-import WorkspaceCat from '../../assets/illustrations/workspace-cat.svg'
-import GirlReading from '../../assets/illustrations/girl-reading.svg'
+import { Modal, IModalContent } from '../Modal/index';
+import { SendingEmail, EmailSent, EmailError } from '../Modal/ModalStates'
 
 const FormContainer = styled.div`
     margin-left: 50px;
@@ -29,123 +28,58 @@ const StyledForm = styled.form`
     }
 `;
 
-interface IModalContent {
-    image: string;
-    title: string;
-    description: string;
-    illustration: string;
-    close: Function;
+interface IFormFields {
+    name: string; isValid: boolean; content: string; isUnchanged: boolean; tip: string; isValidCondition: RegExp | undefined;
 }
-/*
-Not sure if, architecture wise, this component should exists,
-and if itself is not a container
-*/
-export const Form: React.FC = () => {
+
+export const Form: React.FC<{ data: Array<IFormFields> }> = (props) => {
+
     const closeModal = () => {
         setUseModal(false);
-        setModalContent({ image: "", title: "", description: "", illustration: "", close: closeModal });
     }
 
     const [useModal, setUseModal] = useState(false);
     const [modalContent, setModalContent] = useState<IModalContent>({ image: "", title: "", description: "", illustration: "", close: closeModal });
-    const mailRegex = /^(([^<>()[\]\\.,;:\s@]+(\.[^<>()[\]\\.,;:\s@]+)*)|(.+))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    const notEmptyRegex = /^(?!\s*$).+/;
-
-    const [requiredFields, setRequiredFields] = useState({
-        "Nome": {
-            isValid: false,
-            content: "",
-            isUnchanged: true
-        },
-        "Email": {
-            isValid: false,
-            content: "",
-            isUnchanged: true
-        },
-        "Assunto": {
-            isValid: false,
-            content: "",
-            isUnchanged: true
-        },
-        "Telefone": {
-            isValid: true,
-            content: "",
-            isUnchanged: true,
-            tip: " (optional)"
-        },
-        "Mensagem": {
-            isValid: false,
-            content: "",
-            isUnchanged: true
-        }
-    });
+    const [requiredFields, setRequiredFields] = useState(props.data);
 
     const validateField = (field: string, isValid: boolean, content: string) => {
-        setRequiredFields(prevRequiredFields => ({
-            ...prevRequiredFields, [field]: {
-                isValid: isValid,
-                content: content,
-                isUnchanged: false
-            }
-        }))
+        setRequiredFields(requiredFields.map(item => item.name === field ? {
+            ...item,
+            isValid: isValid,
+            content: content,
+            isUnchanged: false
+        } : item));
     }
 
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
         let isFormReady = true;
-        // let key: keyof typeof requiredFields;
-        for (let key in requiredFields) {
-            if (!requiredFields.Nome.isValid) {
-                setRequiredFields(prevRequiredFields => ({
-                    ...prevRequiredFields, [key]: {
-                        isValid: false,
-                        isUnchanged: false
-                    }
-                }))
+
+        setRequiredFields(requiredFields.map((item) => {
+            if (item.isValid === false) {
                 isFormReady = false;
-            }
-        }
-        if (isFormReady) {
-            let mailpostData = {
-                lang: "pt-BR",
-                sender: {
-                    name: requiredFields["Nome"].content,
-                    mail: "willpelicer@gmail.com"
-                },
-                mail: {
-                    subject: requiredFields["Assunto"].content,
-                    body: requiredFields["Mensagem"].content
-                },
-                additionalInfo: {
-                    phoneNumber: requiredFields["Telefone"].content
+                return {
+                    ...item,
+                    isValid: false,
+                    isUnchanged: false
                 }
             }
-            setUseModal(true);
-            setModalContent({
-                image: "Loading",
-                illustration: WorkspaceCat,
-                title: "Sending e-maill",
-                description: "Your e-mail will be sent shortly (if the cat allow)",
-                close: closeModal
-            });
-            email.sendMail(mailpostData).then(() => {
-                setModalContent({
-                    image: "Success",
-                    illustration: GirlReading,
-                    title: "Email sent successfully",
-                    description: "We are raeding your email and will get back to you shortly.",
-                    close: closeModal
-                });
+            return item;
+        }));
 
-            }).catch(() => {
-                setModalContent({
-                    image: "Error",
-                    illustration: WorkspaceCat,
-                    title: "Something went wrong",
-                    description: "We could not send your e-mail. Please, try again later.",
-                    close: closeModal
+        if (isFormReady) {
+            setUseModal(true);
+            setModalContent(SendingEmail(closeModal));
+            email.sendMail(requiredFields.find(field => field.name === "Nome")!.content,
+                requiredFields.find(field => field.name === "Email")!.content,
+                requiredFields.find(field => field.name === "Assunto")!.content,
+                requiredFields.find(field => field.name === "Telefone")!.content,
+                requiredFields.find(field => field.name === "Mensagem")!.content).then(() => {
+                    setModalContent(EmailSent(closeModal));
+
+                }).catch(() => {
+                    setModalContent(EmailError(closeModal));
                 });
-            });
             return false;
         }
     }
@@ -154,15 +88,15 @@ export const Form: React.FC = () => {
         <FormContainer>
             <Title title="Nos mande um e-mail" emailAddress="foo@bar.com.br" />
             <StyledForm onSubmit={handleSubmit}>
-                <InputField isValid={requiredFields["Nome"].isValid} isUnchanged={requiredFields["Nome"].isUnchanged} content={requiredFields["Nome"].content} name="Nome" tip="" reportState={validateField} isValidCondition={notEmptyRegex} />
-                <InputField isValid={requiredFields["Email"].isValid} isUnchanged={requiredFields["Email"].isUnchanged} content={requiredFields["Email"].content} name="Email" tip="" reportState={validateField} isValidCondition={mailRegex} />
-                <InputField isValid={requiredFields["Assunto"].isValid} isUnchanged={requiredFields["Assunto"].isUnchanged} content={requiredFields["Assunto"].content} name="Assunto" tip="" reportState={validateField} isValidCondition={notEmptyRegex} />
-                <InputField isValid={requiredFields["Telefone"].isValid} isUnchanged={requiredFields["Telefone"].isUnchanged} content={requiredFields["Telefone"].content} name="Telefone" tip={requiredFields["Telefone"].tip} isValidCondition={undefined} reportState={validateField} />
-                <TextAreaField isValid={requiredFields["Mensagem"].isValid} isUnchanged={requiredFields["Mensagem"].isUnchanged} content={requiredFields["Mensagem"].content} name="Mensagem" reportState={validateField} isValidCondition={notEmptyRegex} maxLength={500} tip="" />
+                <InputField {...requiredFields.find(field => field.name === "Nome")!} reportState={validateField} />
+                <InputField {...requiredFields.find(field => field.name === "Email")!} reportState={validateField} />
+                <InputField {...requiredFields.find(field => field.name === "Assunto")!} reportState={validateField} />
+                <InputField {...requiredFields.find(field => field.name === "Telefone")!} reportState={validateField} />
+                <TextAreaField {...requiredFields.find(field => field.name === "Mensagem")!} reportState={validateField} maxLength={500} />
                 <Button type="submit" content="Enviar" />
             </StyledForm>
             {
-                useModal ? (<Modal content={modalContent} />) : null
+                useModal ? (<Modal {...modalContent} />) : null
             }
         </FormContainer>
     );

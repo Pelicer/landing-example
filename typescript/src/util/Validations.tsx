@@ -1,7 +1,6 @@
 
 export class StringValidator {
 
-
     /**
      * Validates if a string is valid by checking
      * it agains a regex condition.

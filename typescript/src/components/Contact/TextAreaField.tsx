@@ -43,7 +43,7 @@ const TextArea = styled.textarea<StyledProps>`
     }
 `;
 
-export const TextAreaField: React.FC<{ isValid: boolean; isUnchanged: boolean; isValidCondition: RegExp, reportState: Function; name: string; content: string; tip: string; maxLength: number; }> = (props) => {
+export const TextAreaField: React.FC<{ name: string; isValid: boolean; content: string; isUnchanged: boolean; tip: string; isValidCondition: RegExp | undefined, reportState: Function; maxLength: number; }> = (props) => {
 
     const maxMessageLength = props.maxLength;
     const [remainingLength, setRemainingLength] = useState(maxMessageLength);
