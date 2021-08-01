@@ -80,16 +80,16 @@ const Portfolio: React.FC = () => {
     const settings = {
         dots: true,
         infinite: true,
-        autoplay: 2000,
+        autoplay: true,
         slidesToShow: 1,
         slidesToScroll: 1,
     };
 
-    const ParentElement = (width > 992) ? ItemsWrapper : Slider;
-    return (
+    // const ParentElement = (width > 992) ? ItemsWrapper : Slider;
+    return width > 992 ? (
         <PortfolioSection>
             <Title title="Discover Your Insights" subtitle="Make data-driven decisions with confidence. Panoply provides a single source of data truth taht's compatible with all major business intelligence tools." />
-            <ParentElement {...settings}>
+            <ItemsWrapper>
                 {
                     Articles.map((article) => {
                         return <Item
@@ -99,7 +99,22 @@ const Portfolio: React.FC = () => {
                         </Item>
                     })
                 }
-            </ParentElement>
+            </ItemsWrapper>
+        </PortfolioSection>
+    ) : (
+        <PortfolioSection>
+            <Title title="Discover Your Insights" subtitle="Make data-driven decisions with confidence. Panoply provides a single source of data truth taht's compatible with all major business intelligence tools." />
+            <Slider {...settings}>
+                {
+                    Articles.map((article) => {
+                        return <Item
+                            key={uuidv4()}
+                            title={article.title}
+                            content={article.content}>
+                        </Item>
+                    })
+                }
+            </Slider>
         </PortfolioSection>
     );
 }

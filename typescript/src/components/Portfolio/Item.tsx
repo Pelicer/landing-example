@@ -39,12 +39,12 @@ const Content = styled.p`
 
 export const Item: React.FC<{ title: string; content: string; }> = (props) => {
 
-    const defaultIcon = require('../../assets/icons/system-icons/navbar-icons/layout.svg') as string;
+    const defaultIcon = require('../../assets/icons/system-icons/navbar-icons/layout.svg');
 
     return (
         <ArticleContainer>
             <Article>
-                <Icon src={defaultIcon} />
+                <Icon src={defaultIcon.default} />
                 <Title>{props.title}</Title>
                 <Content>{props.content}</Content>
             </Article>
