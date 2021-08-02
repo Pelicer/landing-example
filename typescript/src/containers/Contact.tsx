@@ -90,7 +90,6 @@ const Contact: React.FC = () => {
     }
 
     const reportSendProgress = (content: string) => {
-        setUseModal(true);
         switch (content) {
             case "SENDING":
                 setModalContent(SendingEmail(closeModal));
@@ -102,6 +101,7 @@ const Contact: React.FC = () => {
                 setModalContent(EmailError(closeModal));
                 break;
         }
+        setUseModal(true);
     }
 
     const [useModal, setUseModal] = useState(false);

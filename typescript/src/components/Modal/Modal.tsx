@@ -98,6 +98,7 @@ export interface IModalContent {
 }
 
 export const Modal: React.FC<IModalContent> = (props) => {
+
     let iconDictionary: Array<{ name: string, icon: string; styledComponent: any; }> =
         [
             {
@@ -122,10 +123,12 @@ export const Modal: React.FC<IModalContent> = (props) => {
             }
         ]
 
+
     const Styled = iconDictionary.filter((icon) => {
         return icon.name === props.image
     })[0];
     const IconComponent = Styled.styledComponent;
+
     return (
 
         ReactDOM.createPortal(
@@ -141,7 +144,7 @@ export const Modal: React.FC<IModalContent> = (props) => {
                     <ImageContainer>
                         <FeaturedImage image={props.illustration} />
                     </ImageContainer>
-                    <CloseSpan onClick={props.close()}>🗙</CloseSpan>
+                    <CloseSpan onClick={() => props.close()}>🗙</CloseSpan>
                 </StyledModal>
             </ModalContainer>, document.querySelector('#modal-root')!)
     )
