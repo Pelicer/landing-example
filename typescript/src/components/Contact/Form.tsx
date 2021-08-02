@@ -27,13 +27,13 @@ const StyledForm = styled.form`
 `;
 
 interface IFormFields {
-    name: string; isValid: boolean; content: string; isUnchanged: boolean; tip: string; isValidCondition: RegExp | undefined;
+    name: string; isValid: boolean; content: string; isUnchanged: boolean; tip: string; isValidCondition: RegExp | undefined; errorMessage: string;
 }
 
 export const Form: React.FC<{ data: Array<IFormFields>; reportSendProgress: Function; }> = (props) => {
 
     const [requiredFields, setRequiredFields] = useState(props.data);
-    
+
     const validateField = (field: string, isValid: boolean, content: string) => {
         setRequiredFields(requiredFields.map(item => item.name === field ? {
             ...item,
@@ -61,11 +61,11 @@ export const Form: React.FC<{ data: Array<IFormFields>; reportSendProgress: Func
 
         if (isFormReady) {
             props.reportSendProgress("SENDING");
-            email.sendMail(requiredFields.find(field => field.name === "Nome")!.content,
+            email.sendMail(requiredFields.find(field => field.name === "Name")!.content,
                 requiredFields.find(field => field.name === "Email")!.content,
-                requiredFields.find(field => field.name === "Assunto")!.content,
-                requiredFields.find(field => field.name === "Telefone")!.content,
-                requiredFields.find(field => field.name === "Mensagem")!.content).then(() => {
+                requiredFields.find(field => field.name === "Subject")!.content,
+                requiredFields.find(field => field.name === "Phone")!.content,
+                requiredFields.find(field => field.name === "Message")!.content).then(() => {
                     props.reportSendProgress("SENT");
 
                 }).catch(() => {
@@ -79,11 +79,11 @@ export const Form: React.FC<{ data: Array<IFormFields>; reportSendProgress: Func
         <FormContainer>
             <Title title="Nos mande um e-mail" emailAddress="foo@bar.com.br" />
             <StyledForm onSubmit={handleSubmit}>
-                <InputField {...requiredFields.find(field => field.name === "Nome")!} reportState={validateField} />
+                <InputField {...requiredFields.find(field => field.name === "Name")!} reportState={validateField} />
                 <InputField {...requiredFields.find(field => field.name === "Email")!} reportState={validateField} />
-                <InputField {...requiredFields.find(field => field.name === "Assunto")!} reportState={validateField} />
-                <InputField {...requiredFields.find(field => field.name === "Telefone")!} reportState={validateField} />
-                <TextAreaField {...requiredFields.find(field => field.name === "Mensagem")!} reportState={validateField} maxLength={500} />
+                <InputField {...requiredFields.find(field => field.name === "Subject")!} reportState={validateField} />
+                <InputField {...requiredFields.find(field => field.name === "Phone")!} reportState={validateField} />
+                <TextAreaField {...requiredFields.find(field => field.name === "Message")!} reportState={validateField} maxLength={500} />
                 <Button type="submit" content="Enviar" />
             </StyledForm>
         </FormContainer>

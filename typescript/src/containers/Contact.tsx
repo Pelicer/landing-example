@@ -37,12 +37,13 @@ const mailRegex = /^(([^<>()[\]\\.,;:\s@]+(\.[^<>()[\]\\.,;:\s@]+)*)|(.+))@((\[[
 const notEmptyRegex = /^(?!\s*$).+/;
 const FormFields = [
     {
-        name: "Nome",
+        name: "Name",
         isValid: false,
         content: "",
         isUnchanged: true,
         tip: "",
-        isValidCondition: notEmptyRegex
+        isValidCondition: notEmptyRegex,
+        errorMessage: "Name cannot be empty"
     },
     {
         name: "Email",
@@ -50,31 +51,35 @@ const FormFields = [
         content: "",
         isUnchanged: true,
         tip: "",
-        isValidCondition: mailRegex
+        isValidCondition: mailRegex,
+        errorMessage: "Email is invalid"
     },
     {
-        name: "Assunto",
+        name: "Subject",
         isValid: false,
         content: "",
         isUnchanged: true,
         tip: "",
-        isValidCondition: notEmptyRegex
+        isValidCondition: notEmptyRegex,
+        errorMessage: "Subject cannot be empty"
     },
     {
-        name: "Telefone",
+        name: "Phone",
         isValid: true,
         content: "",
         isUnchanged: true,
         tip: " (optional)",
-        isValidCondition: undefined
+        isValidCondition: undefined,
+        errorMessage: ""
     },
     {
-        name: "Mensagem",
+        name: "Message",
         isValid: false,
         content: "",
         isUnchanged: true,
         tip: "",
-        isValidCondition: notEmptyRegex
+        isValidCondition: notEmptyRegex,
+        errorMessage: "Message cannot be empty"
     }
 ];
 

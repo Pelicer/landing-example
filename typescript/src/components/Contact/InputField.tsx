@@ -36,9 +36,16 @@ const Input = styled.input<StyledProps>`
     }
 `;
 
-export const InputField: React.FC<{ name: string; isValid: boolean; content: string; isUnchanged: boolean; tip: string; isValidCondition: RegExp | undefined, reportState: Function; }> = (props) => {
+const ErrorSpan = styled.span`
+    margin-left: 10px;
+    font: ${fonts.subtitle2};
+    color: ${palette.support_red};    
+`;
 
-    const borderColor = (props.isValid || (!props.isValid && props.isUnchanged)) ? palette.support_grey_30 : palette.support_red;
+export const InputField: React.FC<{ name: string; isValid: boolean; content: string; isUnchanged: boolean; tip: string; isValidCondition: RegExp | undefined, reportState: Function; errorMessage: string;}> = (props) => {
+
+    const hasError = (props.isValid || (!props.isValid && props.isUnchanged)) ? false : true;
+    const borderColor = hasError ? palette.support_red : palette.support_grey_30;
 
     const validate = (value: string) => {
         props.reportState(
@@ -50,7 +57,7 @@ export const InputField: React.FC<{ name: string; isValid: boolean; content: str
 
     return (
         <Field>
-            <Label htmlFor={props.name}>{props.name + props.tip + ":"}</Label>
+            <Label htmlFor={props.name}>{props.name + props.tip + ":"}{hasError ? <ErrorSpan>{props.errorMessage}</ErrorSpan> : null}</Label>
             <Input
                 key={`${props.name}-input-field`}
                 borderColor={borderColor}

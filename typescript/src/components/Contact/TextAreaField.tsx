@@ -43,11 +43,18 @@ const TextArea = styled.textarea<StyledProps>`
     }
 `;
 
-export const TextAreaField: React.FC<{ name: string; isValid: boolean; content: string; isUnchanged: boolean; tip: string; isValidCondition: RegExp | undefined, reportState: Function; maxLength: number; }> = (props) => {
+const ErrorSpan = styled.span`
+    margin-left: 10px;
+    font: ${fonts.subtitle2};
+    color: ${palette.support_red};    
+`;
+
+export const TextAreaField: React.FC<{ name: string; isValid: boolean; content: string; isUnchanged: boolean; tip: string; isValidCondition: RegExp | undefined, reportState: Function; maxLength: number; errorMessage: string; }> = (props) => {
 
     const maxMessageLength = props.maxLength;
     const [remainingLength, setRemainingLength] = useState(maxMessageLength);
-    const borderColor = (props.isValid || (!props.isValid && props.isUnchanged)) ? palette.support_grey_30 : palette.support_red;
+    const hasError = (props.isValid || (!props.isValid && props.isUnchanged)) ? false : true;
+    const borderColor = hasError ? palette.support_red : palette.support_grey_30;
 
     const validateMessageLength = (e: HTMLTextAreaElement) => {
         setRemainingLength(stringValidator.validateLength(e, maxMessageLength));
@@ -60,7 +67,7 @@ export const TextAreaField: React.FC<{ name: string; isValid: boolean; content: 
 
     return (
         <Field>
-            <Label htmlFor={props.name}>{props.name + ":"}</Label>
+            <Label htmlFor={props.name}>{props.name + ":"}{hasError ? <ErrorSpan>{props.errorMessage}</ErrorSpan> : null}</Label>
             <TextArea
                 borderColor={borderColor}
                 name={props.name}
