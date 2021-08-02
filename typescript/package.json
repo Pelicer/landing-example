@@ -3,39 +3,40 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@playwright/test": "^1.13.1",
+	"@types/react": "^17.0.15",
+	"@types/styled-components": "^5.1.11",
+    "@types/uuid": "^8.3.1",
+	"@types/react-dom": "^17.0.9",
+	"@types/react-slick": "^0.23.5",
+    "axios": "^0.21.1",
+    "react-slick": "^0.28.1",
+    "styled-components": "^5.3.0",
+	"react-scripts": "4.0.3",
+    "slick-carousel": "^1.8.1"
+  },
+  "devDependencies": {
     "@types/node": "^12.20.17",
     "@types/node-sass": "^4.11.2",
-    "@types/react": "^17.0.15",
-    "@types/react-dom": "^17.0.9",
-    "@types/react-slick": "^0.23.5",
-    "@types/styled-components": "^5.1.11",
-    "@types/uuid": "^8.3.1",
-    "axios": "^0.21.1",
-    "node-sass": "^6.0.1",
-    "playwright": "^1.13.1",
+    "@playwright/test": "^1.13.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-scripts": "4.0.3",
-    "react-slick": "^0.28.1",
-    "sass": "^1.35.2",
-    "sass-loader": "^10.2.0",
-    "slick-carousel": "^1.8.1",
-    "styled-components": "^5.3.0",
-    "typescript": "^4.3.5",
     "uuid": "^8.3.2",
-    "webpack": "^4.44.2"
+    "typescript": "^4.3.5",
+    "node-sass": "^6.0.1",
+    "sass": "^1.35.2",
+    "playwright": "^1.13.1",
+    "playwright-cli": "^0.180.0",
+    "sass-loader": "^10.2.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "npx playwright test --config=tests/config/playwright.config.ts --headed",
+    "test": "npx playwright test --config=tests/config/playwright.config.ts",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
-      "react-app",
-      "react-app/jest"
+      "react-app"
     ]
   },
   "browserslist": {
@@ -49,8 +50,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "playwright-cli": "^0.180.0"
   }
 }

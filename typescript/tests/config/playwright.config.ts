@@ -1,36 +1,30 @@
 import { PlaywrightTestConfig, devices } from '@playwright/test';
 
 const config: PlaywrightTestConfig = {
+  testDir: "../",
+  use: {
+    baseURL: "http://localhost:3000",
+    headless: true,
+  },
   projects: [
     {
-      name: 'Chrome Stable',
+      name: 'Chrome',
       use: {
-        browserName: 'chromium',
-        channel: 'chrome',
+        browserName: "chromium"
       },
     },
     {
-      name: 'Desktop Safari',
+      name: 'Firefox',
       use: {
-        browserName: 'webkit',
-        viewport: { width: 1200, height: 750 },
-      }
+        browserName: "firefox"
+      },
     },
     {
-      name: 'Mobile Chrome',
-      use: devices['Pixel 5'],
-    },
-    {
-      name: 'Mobile Safari',
-      use: devices['iPhone 12'],
-    },
-    {
-      name: 'Desktop Firefox',
+      name: 'Safari',
       use: {
-        browserName: 'firefox',
-        viewport: { width: 800, height: 600 },
-      }
-    },
+        browserName: "webkit"
+      },
+    }
   ],
 };
 export default config;

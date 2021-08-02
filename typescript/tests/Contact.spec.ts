@@ -5,7 +5,7 @@ import { FormData } from './data/FormData';
 test.describe('Contact component testing', () => {
 
     test.beforeEach(async ({ page }) => {
-        await page.goto('http://localhost:3000')
+        await page.goto("/");
     });
 
     it('Should populate every input in the form', async ({ page }) => {
@@ -66,7 +66,6 @@ test.describe('Contact component testing', () => {
         await page.screenshot({ path: `./tests/evidences/ShouldShowModal.png` })
 
         const modal = await page.$$("data-test-id='react-portal-modal'")
-        await page.pause();
         expect(modal).toBeTruthy();
     });
 })
