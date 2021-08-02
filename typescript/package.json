@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@playwright/test": "^1.13.1",
     "@types/node": "^12.20.17",
     "@types/node-sass": "^4.11.2",
     "@types/react": "^17.0.15",
@@ -12,6 +13,7 @@
     "@types/uuid": "^8.3.1",
     "axios": "^0.21.1",
     "node-sass": "^6.0.1",
+    "playwright": "^1.13.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
@@ -27,7 +29,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "npx playwright test --config=tests/config/playwright.config.ts --headed",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -47,5 +49,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "playwright-cli": "^0.180.0"
   }
 }
