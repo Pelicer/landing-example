@@ -1,22 +1,22 @@
 export const FormData = {
-    "Nome": {
-        selector: 'input[name="Nome"]',
+    "Name": {
+        selector: 'input[name="Name"]',
         value: "John Doe"
     },
     "Email": {
         selector: 'input[name="Email"]',
         value: "johndoe@gmail.com"
     },
-    "Assunto": {
-        selector: 'input[name="Assunto"]',
+    "Subject": {
+        selector: 'input[name="Subject"]',
         value: "Contact"
     },
-    "Telefone": {
-        selector: 'input[name="Telefone"]',
+    "Phone": {
+        selector: 'input[name="Phone"]',
         value: "00000000000"
     },
-    "Mensagem": {
-        selector: 'textarea[name="Mensagem"]',
+    "Message": {
+        selector: 'textarea[name="Message"]',
         value: "I'm contacting you"
     }
 };

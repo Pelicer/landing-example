@@ -42,7 +42,7 @@ const ErrorSpan = styled.span`
     color: ${palette.support_red};    
 `;
 
-export const InputField: React.FC<{ name: string; isValid: boolean; content: string; isUnchanged: boolean; tip: string; isValidCondition: RegExp | undefined, reportState: Function; errorMessage: string;}> = (props) => {
+export const InputField: React.FC<{ name: string; isValid: boolean; content: string; isUnchanged: boolean; tip: string; isValidCondition: RegExp | undefined, reportState: Function; errorMessage: string; }> = (props) => {
 
     const hasError = (props.isValid || (!props.isValid && props.isUnchanged)) ? false : true;
     const borderColor = hasError ? palette.support_red : palette.support_grey_30;
@@ -57,7 +57,7 @@ export const InputField: React.FC<{ name: string; isValid: boolean; content: str
 
     return (
         <Field>
-            <Label htmlFor={props.name}>{props.name + props.tip + ":"}{hasError ? <ErrorSpan>{props.errorMessage}</ErrorSpan> : null}</Label>
+            <Label htmlFor={props.name}>{props.name + props.tip + ":"}{hasError ? <ErrorSpan data-test-id={`error-${props.name}`}>{props.errorMessage}</ErrorSpan> : null}</Label>
             <Input
                 key={`${props.name}-input-field`}
                 borderColor={borderColor}

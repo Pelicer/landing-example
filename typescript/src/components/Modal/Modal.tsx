@@ -132,7 +132,7 @@ export const Modal: React.FC<IModalContent> = (props) => {
     return (
 
         ReactDOM.createPortal(
-            <ModalContainer>
+            <ModalContainer data-test-id="react-portal-modal">
                 <StyledModal>
                     <IconComponent>
                         <IconImage src={Styled.icon} />

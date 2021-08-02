@@ -67,7 +67,7 @@ export const TextAreaField: React.FC<{ name: string; isValid: boolean; content: 
 
     return (
         <Field>
-            <Label htmlFor={props.name}>{props.name + ":"}{hasError ? <ErrorSpan>{props.errorMessage}</ErrorSpan> : null}</Label>
+            <Label htmlFor={props.name}>{props.name + ":"}{hasError ? <ErrorSpan data-test-id={`error-${props.name}`}>{props.errorMessage}</ErrorSpan> : null}</Label>
             <TextArea
                 borderColor={borderColor}
                 name={props.name}
