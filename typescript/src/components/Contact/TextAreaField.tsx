@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import palette from '../../assets/style/palette.module.scss';
-import fonts from '../../assets/style/fonts.module.scss';
+import theme from '../../assets/style/Theme';
 import { stringValidator } from '../../util/Validations'
 
 interface StyledProps {
@@ -20,17 +19,17 @@ const Field = styled.div`
 `;
 
 const Label = styled.label`
-    font: ${fonts.body1};
+    font: ${props => props.theme.fonts.body1};
     font-size: .75rem;
 `;
 
 const CharactersCount = styled.p`
-    font: ${fonts.body1};
+    font: ${props => props.theme.fonts.body1};
     font-size: .75rem;
 `;
 
 const TextArea = styled.textarea<StyledProps>`
-    font: ${fonts.body1};
+    font: ${props => props.theme.fonts.body1};
     padding: 10px;
     border-radius: 5px;
     outline: none;
@@ -39,14 +38,14 @@ const TextArea = styled.textarea<StyledProps>`
     resize: none;
     box-sizing: border-box;
     &:focus {
-        border: 1px solid ${palette.primary_blue};
+        border: 1px solid ${props => props.theme.colors.primaryBlue};
     }
 `;
 
 const ErrorSpan = styled.span`
     margin-left: 10px;
-    font: ${fonts.subtitle2};
-    color: ${palette.support_red};    
+    font: ${props => props.theme.fonts.subtitle2};
+    color: ${props => props.theme.colors.supportRed};    
 `;
 
 export const TextAreaField: React.FC<{ name: string; isValid: boolean; content: string; isUnchanged: boolean; tip: string; isValidCondition: RegExp | undefined, reportState: Function; maxLength: number; errorMessage: string; }> = (props) => {
@@ -54,7 +53,7 @@ export const TextAreaField: React.FC<{ name: string; isValid: boolean; content: 
     const maxMessageLength = props.maxLength;
     const [remainingLength, setRemainingLength] = useState(maxMessageLength);
     const hasError = (props.isValid || (!props.isValid && props.isUnchanged)) ? false : true;
-    const borderColor = hasError ? palette.support_red : palette.support_grey_30;
+    const borderColor = hasError ? theme.colors.supportRed : theme.colors.supportGrey30;
 
     const validateMessageLength = (e: HTMLTextAreaElement) => {
         setRemainingLength(stringValidator.validateLength(e, maxMessageLength));

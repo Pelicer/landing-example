@@ -1,8 +1,7 @@
 import styled from 'styled-components'
-import palette from '../../assets/style/palette.module.scss';
 
 const ItemWrapper = styled.div`
-    background-color: ${palette.primary_blue};
+    background-color: ${props => props.theme.colors.primaryBlue};
     border-radius: 100%;
     height: 40px;
     width: 40px;

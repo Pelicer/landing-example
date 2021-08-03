@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import palette from '../assets/style/palette.module.scss';
 import { SocialApp } from '../components/Social/index'
 import { v4 as uuidv4 } from 'uuid';
 import { facebook, instagram, linkedin, twitter } from '../components/Social/SocialIcons';
@@ -26,7 +25,7 @@ const SocialMedias = [
 const SocialBar = styled.section`
     padding: 0 300px;
     display: flex;
-    background-color: ${palette.support_grey_05};
+    background-color: ${props => props.theme.colors.supportGrey05};
     justify-content: space-around;
 
     @media (max-width: 1680px){

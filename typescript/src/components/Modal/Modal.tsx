@@ -2,8 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Loading, Warning, Check, Close } from './FeedbackIcons';
 import styled from 'styled-components';
-import palette from '../../assets/style/palette.module.scss';
-import fonts from '../../assets/style/fonts.module.scss';
 import FeaturedImage from '../../shared/FeaturedImage';
 
 const ModalContainer = styled.div`
@@ -22,7 +20,7 @@ const StyledModal = styled.div`
     position: absolute;
     border-radius: 10px;
     padding: 30px;
-    background-color: ${palette.support_white};
+    background-color: ${props => props.theme.colors.supportWhite};
     width: 60%;
     height: 50%;
     display: flex;
@@ -32,14 +30,14 @@ const StyledModal = styled.div`
 `;
 
 const Title = styled.div`
-    color: ${palette.support_grey_70};
-    font: ${fonts.subtitle1};
+    color: ${props => props.theme.colors.supportGrey70};
+    font: ${props => props.theme.fonts.subtitle1};
     text-align: center;
 `;
 
 const Description = styled.div`
-    color: ${palette.support_grey_70};
-    font: ${fonts.body2};
+    color: ${props => props.theme.colors.supportGrey70};
+    font: ${props => props.theme.fonts.body2};
     text-align: center;
 `;
 
@@ -66,19 +64,19 @@ display: block;
 `;
 
 const LoadingIcon = styled(Icon)`
-    background-image: linear-gradient(to right, ${palette.primary_blue}, ${palette.secondary_purple});
+    background-image: linear-gradient(to right, ${props => props.theme.colors.primaryblue}, ${props => props.theme.colors.primaryPurple});
 `;
 
 const WarningIcon = styled(Icon)`
-    background-color: ${palette.support_yellow};
+    background-color: ${props => props.theme.colors.supportYellow};
 `;
 
 const ErrorIcon = styled(Icon)`
-    background-color: ${palette.support_red};
+    background-color: ${props => props.theme.colors.supportRed};
 `;
 
 const SuccessIcon = styled(Icon)`
-    background-color: ${palette.support_green};
+    background-color: ${props => props.theme.colors.supportGreen};
 `;
 
 const CloseSpan = styled.span`
@@ -86,7 +84,7 @@ const CloseSpan = styled.span`
     position: absolute;
     top: 20px;
     right: 20px;
-    color: ${palette.support_gre_70};
+    color: ${props => props.theme.colors.supportGrey70};
 `;
 
 export interface IModalContent {

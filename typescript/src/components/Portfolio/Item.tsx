@@ -1,6 +1,4 @@
 import styled from 'styled-components'
-import palette from '../../assets/style/palette.module.scss';
-import fonts from '../../assets/style/fonts.module.scss';
 
 const ArticleContainer = styled.div`
     display: flex;
@@ -9,7 +7,7 @@ const ArticleContainer = styled.div`
 
 const Article = styled.div`
     border-radius: 10px;
-    background-image: linear-gradient(to bottom, ${palette.support_grey_05}, ${palette.secondary_purple}20);
+    background-image: linear-gradient(to bottom, ${props => props.theme.colors.supportGrey05}, ${props => props.theme.colors.primaryPurple}20);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -28,12 +26,12 @@ const Icon = styled.img`
 `;
 
 const Title = styled.p`
-    font: ${fonts.subtitle2};
+    font: ${props => props.theme.fonts.subtitle2};
     text-align: center;
 `;
 
 const Content = styled.p`
-    font: ${fonts.body1};
+    font: ${props => props.theme.fonts.body1};
     text-align: center;
 `;
 

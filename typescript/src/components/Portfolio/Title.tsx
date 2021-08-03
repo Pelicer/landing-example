@@ -1,6 +1,4 @@
 import styled from 'styled-components'
-import palette from '../../assets/style/palette.module.scss';
-import fonts from '../../assets/style/fonts.module.scss';
 
 const TitleArea = styled.div`
     display: flex;
@@ -12,14 +10,14 @@ const TitleArea = styled.div`
 
 const TitleParagraph = styled.p`
     margin-bottom: 1rem;
-    font: ${fonts.h2};
-    color: ${palette.support_grey_70};
+    font: ${props => props.theme.fonts.title};
+    color: ${props => props.theme.colors.supportGrey70};
 `;
 
 const ContentParagraph = styled.p`
     margin-top: 0;
-    font: ${fonts.body1};
-    color: ${palette.support_grey_70};
+    font: ${props => props.theme.fonts.body1};
+    color: ${props => props.theme.colors.supportGrey70};
     max-width: 500px;
 `;
 

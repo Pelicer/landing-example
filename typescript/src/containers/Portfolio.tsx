@@ -1,7 +1,5 @@
 import styled from 'styled-components'
 import { useLayoutEffect, useState } from "react";
-import palette from '../assets/style/palette.module.scss';
-import measures from '../assets/style/measures.module.scss';
 import { Title, Item } from '../components/Portfolio/index';
 import { v4 as uuidv4 } from 'uuid';
 import Slider from "react-slick";
@@ -42,8 +40,8 @@ const Articles = [
 ]
 
 const PortfolioSection = styled.section`
-    padding: 0 ${measures.main_content_margin};
-    background-color: ${palette.support_white};
+    padding: 0 ${props => props.theme.measures.contentMargin};
+    background-color: ${props => props.theme.colors.supportWhite};
     justify-content: space-around;
 `;
 

@@ -1,9 +1,8 @@
 import styled from 'styled-components'
-import palette from '../assets/style/palette.module.scss';
 import { SocialMedia, Credits } from '../components/Footer/index';
 
 const FooterWrapper = styled.div`
-    background-image: linear-gradient(to right, ${palette.primary_blue}, ${palette.secondary_purple});
+    background-image: linear-gradient(to right, ${props => props.theme.colors.primaryBlue}, ${props => props.theme.colors.primaryPurple});
     bottom: 0;
     width: 100%;
     display: grid;

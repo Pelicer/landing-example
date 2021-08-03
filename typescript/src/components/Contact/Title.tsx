@@ -1,17 +1,15 @@
 import styled from 'styled-components';
-import palette from '../../assets/style/palette.module.scss';
-import fonts from '../../assets/style/fonts.module.scss';
 
 const TitleParagraph = styled.p`
-    font: ${fonts.h2};
-    color: ${palette.support_grey_70};
+    font: ${props => props.theme.fonts.title};
+    color: ${props => props.theme.colors.supportGrey70};
     margin-bottom: 0;
 `;
 
 const Subtitle = styled.p`
-    font: ${fonts.subtitle2};
+    font: ${props => props.theme.fonts.subtitle2};
     margin-top: 0;
-    color: ${palette.support_grey_70};
+    color: ${props => props.theme.colors.supportGrey70};
 `;
 
 export const Title: React.FC<{ title: string; emailAddress: string; }> = (props) => {

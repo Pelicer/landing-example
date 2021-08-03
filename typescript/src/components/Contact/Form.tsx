@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components'
 import { Title } from './Title';
 import { InputField } from './InputField';
 import { TextAreaField } from './TextAreaField';

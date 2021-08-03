@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import measures from '../assets/style/measures.module.scss'
 import FeaturedImage from '../shared/FeaturedImage';
 import { Form } from '../components/Contact/index';
 import Mail from '../assets/illustrations/mail.svg';
@@ -9,7 +8,7 @@ import { SendingEmail, EmailSent, EmailError } from '../components/Modal/ModalSt
 
 const StyledContact = styled.section`
     margin: 50px 0;
-    padding: 0 ${measures.main_content_margin};
+    padding: 0 ${props => props.theme.measures.contentMargin};
     display: grid;
     grid-template-columns: repeat(2, 1fr);
 
@@ -19,7 +18,7 @@ const StyledContact = styled.section`
 
     @media (max-width: 762px){
         grid-template-columns: 1fr;
-        padding: 0 ${measures.main_content_margin};
+        padding: 0 ${props => props.theme.measures.contentMargin};
     }
 `;
 

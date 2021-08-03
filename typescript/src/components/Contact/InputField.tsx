@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import palette from '../../assets/style/palette.module.scss';
-import fonts from '../../assets/style/fonts.module.scss';
+import theme from '../../assets/style/Theme';
 import { stringValidator } from '../../util/Validations'
 
 interface StyledProps {
@@ -18,12 +17,12 @@ const Field = styled.div`
 `;
 
 const Label = styled.label`
-    font: ${fonts.body1};
+    font: ${props => props.theme.fonts.body1};
     font-size: .75rem;
 `;
 
 const Input = styled.input<StyledProps>`
-    font: ${fonts.body1};
+    font: ${props => props.theme.fonts.body1};
     padding: 10px;
     border-radius: 5px;
     outline: none;
@@ -32,20 +31,20 @@ const Input = styled.input<StyledProps>`
     resize: none;
     box-sizing: border-box;
     &:focus {
-        border: 1px solid ${palette.primary_blue};
+        border: 1px solid ${props => props.theme.colors.primaryBlue};
     }
 `;
 
 const ErrorSpan = styled.span`
     margin-left: 10px;
-    font: ${fonts.subtitle2};
-    color: ${palette.support_red};    
+    font: ${props => props.theme.fonts.subtitle2};
+    color: ${props => props.theme.colors.supportRed};    
 `;
 
 export const InputField: React.FC<{ name: string; isValid: boolean; content: string; isUnchanged: boolean; tip: string; isValidCondition: RegExp | undefined, reportState: Function; errorMessage: string; }> = (props) => {
 
     const hasError = (props.isValid || (!props.isValid && props.isUnchanged)) ? false : true;
-    const borderColor = hasError ? palette.support_red : palette.support_grey_30;
+    const borderColor = hasError ? theme.colors.supportRed : theme.colors.supportGrey30;
 
     const validate = (value: string) => {
         props.reportState(
