@@ -1,38 +1,43 @@
 import styled from 'styled-components'
 import { useLayoutEffect, useState } from "react";
 import { Title, Item } from '../components/Portfolio/index';
-import { v4 as uuidv4 } from 'uuid';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 const Articles = [
     {
+        "id": 1,
         "icon": "",
         "title": "Operational BI",
         "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
     },
     {
+        "id": 2,
         "icon": "",
         "title": "Data Visualization",
         "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
     },
     {
+        "id": 3,
         "icon": "",
         "title": "Machine Learning",
         "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
     },
     {
+        "id": 4,
         "icon": "",
         "title": "Natural Language Processing",
         "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
     },
     {
+        "id": 5,
         "icon": "",
         "title": "Enhancing Privacy & Security",
         "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
     },
     {
+        "id": 6,
         "icon": "",
         "title": "Data Mining",
         "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
@@ -83,38 +88,34 @@ const Portfolio: React.FC = () => {
         slidesToScroll: 1,
     };
 
-    // const ParentElement = (width > 992) ? ItemsWrapper : Slider;
-    return width > 992 ? (
+    const ArticleList = Articles.map((article) => {
+        return <Item
+            key={article.id}
+            title={article.title}
+            content={article.content}>
+        </Item>
+    });
+
+    return (
         <PortfolioSection>
             <Title title="Discover Your Insights" subtitle="Make data-driven decisions with confidence. Panoply provides a single source of data truth taht's compatible with all major business intelligence tools." />
-            <ItemsWrapper>
-                {
-                    Articles.map((article) => {
-                        return <Item
-                            key={uuidv4()}
-                            title={article.title}
-                            content={article.content}>
-                        </Item>
-                    })
-                }
-            </ItemsWrapper>
+            {
+                width > 992 ? (
+                    <ItemsWrapper>
+                        {
+                            ArticleList
+                        }
+                    </ItemsWrapper>
+                ) : (
+                    <Slider {...settings}>
+                        {
+                            ArticleList
+                        }
+                    </Slider>
+                )
+            }
         </PortfolioSection>
-    ) : (
-        <PortfolioSection>
-            <Title title="Discover Your Insights" subtitle="Make data-driven decisions with confidence. Panoply provides a single source of data truth taht's compatible with all major business intelligence tools." />
-            <Slider {...settings}>
-                {
-                    Articles.map((article) => {
-                        return <Item
-                            key={uuidv4()}
-                            title={article.title}
-                            content={article.content}>
-                        </Item>
-                    })
-                }
-            </Slider>
-        </PortfolioSection>
-    );
+    )
 }
 
 export default Portfolio;

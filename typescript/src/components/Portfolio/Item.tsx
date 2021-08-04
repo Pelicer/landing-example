@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { ReactComponent as DefaultIcon } from '../../assets/icons/system-icons/navbar-icons/layout.svg';
 
 const ArticleContainer = styled.div`
     display: flex;
@@ -21,10 +22,6 @@ const Article = styled.div`
     }
 `;
 
-const Icon = styled.img`
-    width: 35px;
-`;
-
 const Title = styled.p`
     font: ${props => props.theme.fonts.subtitle2};
     text-align: center;
@@ -37,12 +34,10 @@ const Content = styled.p`
 
 export const Item: React.FC<{ title: string; content: string; }> = (props) => {
 
-    const defaultIcon = require('../../assets/icons/system-icons/navbar-icons/layout.svg');
-
     return (
         <ArticleContainer>
             <Article>
-                <Icon src={defaultIcon.default} />
+                <DefaultIcon />
                 <Title>{props.title}</Title>
                 <Content>{props.content}</Content>
             </Article>
