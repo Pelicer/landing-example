@@ -1,16 +1,19 @@
-import React from 'react';
-import Landing from './Landing';
-import FontsStyle from '../assets/style/GlobalStyles'
-import { ThemeProvider } from 'styled-components'
-import theme from "../assets/style/Theme";
+import Header from '../containers/Header';
+import SocialBar from '../containers/Social';
+import Portfolio from '../containers/Portfolio';
+import Contact from '../containers/Contact';
+import Footer from '../containers/Footer';
 
-export default function Home() {
+const Home: React.FC = () => {
   return (
-    <React.StrictMode>
-    <FontsStyle />
-    <ThemeProvider theme={theme}>
-      <Landing />
-    </ThemeProvider>
-  </React.StrictMode>
-  )
+    <div>
+      <Header />
+      <SocialBar />
+      <Portfolio />
+      <Contact />
+      <Footer />
+    </div>
+  );
 }
+
+export default Home;
