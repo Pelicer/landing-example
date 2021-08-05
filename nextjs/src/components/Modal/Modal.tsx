@@ -1,5 +1,5 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import { useRef, useEffect, useState, RefObject } from 'react'
+import { createPortal } from 'react-dom';
 import { Loading, Warning, Check, Close } from './FeedbackIcons';
 import styled from 'styled-components';
 import FeaturedImage from '../../shared/FeaturedImage';
@@ -96,6 +96,14 @@ export interface IModalContent {
 }
 
 export const Modal: React.FC<IModalContent> = (props) => {
+    const selector = "#modal";
+    const ref = useRef<HTMLDivElement>()
+    const [mounted, setMounted] = useState(false)
+
+    useEffect(() => {
+        ref.current = document.querySelector(selector) as HTMLDivElement
+        setMounted(true)
+    }, [selector])
 
     let iconDictionary: Array<{ name: string, icon: string; styledComponent: any; }> =
         [
@@ -128,22 +136,22 @@ export const Modal: React.FC<IModalContent> = (props) => {
     const IconComponent = Styled.styledComponent;
 
     return (
-
-        ReactDOM.createPortal(
-            <ModalContainer data-test-id="react-portal-modal">
-                <StyledModal>
-                    <IconComponent>
-                        <IconImage src={Styled.icon} />
-                    </IconComponent>
-                    <div>
-                        <Title>{props.title}</Title>
-                        <Description>{props.description}</Description>
-                    </div>
-                    <ImageContainer>
-                        <FeaturedImage image={props.illustration} />
-                    </ImageContainer>
-                    <CloseSpan onClick={() => props.close()}>🗙</CloseSpan>
-                </StyledModal>
-            </ModalContainer>, document.querySelector('#modal-root')!)
+        mounted ?
+            createPortal(
+                <ModalContainer data-test-id="react-portal-modal">
+                    <StyledModal>
+                        <IconComponent>
+                            <IconImage src={Styled.icon} />
+                        </IconComponent>
+                        <div>
+                            <Title>{props.title}</Title>
+                            <Description>{props.description}</Description>
+                        </div>
+                        <ImageContainer>
+                            <FeaturedImage image={props.illustration} />
+                        </ImageContainer>
+                        <CloseSpan onClick={() => props.close()}>🗙</CloseSpan>
+                    </StyledModal>
+                </ModalContainer>, ref.current as HTMLDivElement) : null
     )
 }
