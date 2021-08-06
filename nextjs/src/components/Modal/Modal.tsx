@@ -1,6 +1,10 @@
-import { useRef, useEffect, useState, RefObject } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import { createPortal } from 'react-dom';
-import { Loading, Warning, Check, Close } from './FeedbackIcons';
+import Loading from '../../assets/icons/modal/loading.svg';
+import Warning from '../../assets/icons/modal/warning.svg';
+import Check from '../../assets/icons/modal/check.svg';
+import Close from '../../assets/icons/modal/close.svg';
+import Image from 'next/image';
 import styled from 'styled-components';
 import FeaturedImage from '../../shared/FeaturedImage';
 
@@ -50,10 +54,6 @@ const Icon = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-`;
-
-const IconImage = styled.img`
-    width: 30px;
 `;
 
 const ImageContainer = styled.div`
@@ -109,22 +109,22 @@ export const Modal: React.FC<IModalContent> = (props) => {
         [
             {
                 name: "Loading",
-                icon: Loading.default,
+                icon: Loading,
                 styledComponent: LoadingIcon
             },
             {
                 name: "Warning",
-                icon: Warning.default,
+                icon: Warning,
                 styledComponent: WarningIcon
             },
             {
                 name: "Success",
-                icon: Check.default,
+                icon: Check,
                 styledComponent: SuccessIcon
             },
             {
                 name: "Error",
-                icon: Close.default,
+                icon: Close,
                 styledComponent: ErrorIcon
             }
         ]
@@ -141,7 +141,7 @@ export const Modal: React.FC<IModalContent> = (props) => {
                 <ModalContainer data-test-id="react-portal-modal">
                     <StyledModal>
                         <IconComponent>
-                            <IconImage src={Styled.icon} />
+                            <Image src={Styled.icon} width={30} height={30} alt="" />
                         </IconComponent>
                         <div>
                             <Title>{props.title}</Title>
