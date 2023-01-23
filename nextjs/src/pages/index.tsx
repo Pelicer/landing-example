@@ -19,7 +19,6 @@ const Home: React.FC = () => {
     sessionSampleRate: 100,
     sessionReplaySampleRate: 100,
     trackUserInteractions: true,
-    forwardErrorsToLogs: true,
     trackFrustrations: true,
     trackResources: true,
     trackLongTasks: true,
