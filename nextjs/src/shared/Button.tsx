@@ -22,7 +22,10 @@ const StyledButton = styled.button<StyledProps>`
 
 const Button: React.FC<{ type?: string; maxWidth?: string; content: string }> = (props) => {
     return (
-        <StyledButton maxWidth={props.maxWidth} >
+        <StyledButton onClick={(e) => {
+            console.log(`I'm comming from a button click, these are my properties: ${e}`)
+            console.log(e);
+        }}maxWidth={props.maxWidth} >
             {props.content}
         </StyledButton >
     );
